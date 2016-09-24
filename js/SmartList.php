@@ -21,12 +21,19 @@ interface.menu = function()
 	{
 		//open menu
 		document.getElementById('menu').style.display = "block";
+		//document.getElementById('menu').className = "animateFromRight";
+
+		document.getElementById('mainView').className = "blurred";
+		document.getElementById('footer').className = "blurred";
 		interface.info.menuOpened = 1;
 	}
 	else
 	{
 		//close menu
 		document.getElementById('menu').style.display = "none";
+		//document.getElementById('menu').className = "animateFromLeft";
+		document.getElementById('mainView').className = "";
+		document.getElementById('footer').className = "";
 		interface.info.menuOpened = 0;
 	}
 }
@@ -37,6 +44,7 @@ interface.compose = function(data)
 	if (data.element == "menu")
 	{
 		elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'home'})\">Home</div>";
+		elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'list-history'})\">My Lists</div>";
 		elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'account'})\">Account</div>";
 		elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'setting'})\">Setting</div>";
 		elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'whoweare'})\">whoweare</div>";
@@ -54,7 +62,7 @@ interface.compose = function(data)
 	{
 		if (interface.info.currentPage == "home")
 		{
-			elementHtml += "My Smart List :";
+			elementHtml += "<h2>Hey " + interface.data.profile.firstname + " ! You can write your new Smart List here :</h2>";
 		}
 		else if (interface.info.currentPage == "setting")
 			elementHtml += "MySmartList Settings";
@@ -62,10 +70,12 @@ interface.compose = function(data)
 			elementHtml += "Who we are";
 		else if (interface.info.currentPage == "account")
 			elementHtml += "Account Page";
+		else if (interface.info.currentPage == "list-history")
+			elementHtml += "My Last Lists";
 	}
 	else if (data.element == "footer")
 	{
-		elementHtml += "Hackathon Carrefour by BeMyApp 2016 &copy; - MySmartList &copy;";
+		elementHtml += "<div>Hackathon Carrefour by BeMyApp 2016 &copy; - MySmartList &copy;</div>";
 	}
 	return elementHtml;
 }
@@ -105,3 +115,36 @@ interface.construct = function()
 	//Init rendering
 	interface.render();
 }
+
+
+
+interface.data = {
+	"profile": {
+		"firstname": "Henri",
+		"lastname": "Lumière",
+		"birthdate": "20-10-1985",
+		"sexe": "male",
+		"avatar": "avatar.jpg",
+		"lists": [{
+			"dateCreation": "23-09-2016",
+			"shared": "0",
+			"price": 4.77,
+			"products": [{
+				"id": "044016223",
+				"name": "Haricots Verts",
+				"price": 0.98,
+				"img": "haricots.jpg"
+			}, {
+				"id": "049849681",
+				"name": "Shampoing l'Oréal",
+				"price": 2.48,
+				"img": "shampoing.jpg"
+			}, {
+				"id": "098465665",
+				"name": "Café Décaféiné",
+				"price": 2.31,
+				"img": "cafe.jpg"
+			}]
+		}]
+	}
+};

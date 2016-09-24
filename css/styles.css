@@ -1,4 +1,20 @@
+/* Fonts */
+@font-face {
+    font-family: 'Calibri';
+    src: url('font/Calibri.eot');
+    src: url('font/Calibri.eot') format('embedded-opentype'),
+         url('font/Calibri.woff2') format('woff2'),
+         url('font/Calibri.woff') format('woff'),
+         url('font/Calibri.ttf') format('truetype'),
+         url('font/Calibri.svg#Calibri') format('svg');
+}
+
+
 /* Styles */
+
+* {
+	font-family: 'Calibri';
+}
 
 body {
 	padding: 0px;
@@ -6,10 +22,14 @@ body {
 	position: relative;
 	z-index: 0;
 	overflow: hidden;
+	max-width: 500px;
+	margin: 0 auto;
+	border-left: solid 1px red;
+	border-right: solid 1px red;
 }
 
 #menu {
-	background: #ccc;
+	background: rgba(255, 165, 0, 0.5);
     position: absolute;
     top: 91px;
     right: 0px;
@@ -17,12 +37,18 @@ body {
     height: 100% !important;
     z-index: 100;
     padding: 30px;
+    border-left: solid 1px red;
 }
 
 #menu div.button {
-	text-align: right;
-	font-size: 2.4em;
-	font-weight: bold;
+    text-align: right;
+    font-size: 2.4em;
+    font-weight: bold;
+    margin-bottom: 50px;
+}
+
+#menu div.button:hover {
+    color:red;
 }
 
 #menu-bar {
@@ -73,10 +99,51 @@ body {
 }
 
 #footer {
-	background: red;
-    position: absolute;
+	position: absolute;
     bottom: 0px;
     width: 100%;
     height: 35px;
     text-align: center;
+    border-top: solid 1px red;
+}
+
+#footer div {
+    vertical-align: middle;
+    margin-top: 7px;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+/*** Effects ***/
+
+.blurred {
+	-webkit-filter: blur(5px);
+    filter: blur(5px);
+}
+
+/*** Animations ***/
+
+.animateFromLeft {
+    -webkit-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    -ms-transition: all 1s ease-in-out;
+
+    -webkit-transform: translate(100%,0);
+    -moz-transform: translate(100%,0);
+    -o-transform: translate(100%,0);
+    -ms-transform: translate(100%,0);
+}
+
+.animateFromRight {
+    -webkit-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    -ms-transition: all 1s ease-in-out;
+
+    -webkit-transform: translate(0,100%);
+    -moz-transform: translate(0,100%);
+    -o-transform: translate(0,100%);
+    -ms-transform: translate(0,100%);
 }
