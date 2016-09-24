@@ -91,23 +91,58 @@ interface.compose = function(data)
 		if (interface.info.currentPage == "home")
 		{
 			elementHtml += interface.pageTitle({title:'Home'});
-			elementHtml += "<h2>You can write your new Smart List here</h2>";
+			elementHtml += "<div id=\"main-content\">";
+
+			elementHtml += "</div>";
 			elementHtml += interface.shortcuts();
 		}
 		else if (interface.info.currentPage == "settings")
 		{
 			elementHtml += interface.pageTitle({title:'Settings'});
-			elementHtml += "MySmartList Settings";
+			elementHtml += "<div id=\"main-content\">";
+
+			elementHtml += "</div>";
 		}
 		else if (interface.info.currentPage == "whoweare")
 		{
 			elementHtml += interface.pageTitle({title:'Who We Are !'});
-			elementHtml += "Who we are";
+			elementHtml += "<div id=\"main-content\">";
+
+			elementHtml += "</div>";
 		}
 		else if (interface.info.currentPage == "account")
 		{
-			elementHtml += interface.pageTitle({title:'Account'});
-			elementHtml += "Account Page";
+			elementHtml += interface.pageTitle({title:'User Account'});
+			elementHtml += "<div id=\"main-content\">";
+				elementHtml += "<div class=\"lineDivideTwo\">";
+					elementHtml += "<div class=\"line\">";
+						elementHtml += "<div class=\"line-title\">Lastname</div>";
+						elementHtml += "<div class=\"line-data\">" + interface.data.profile.lastname + "</div>";
+					elementHtml += "</div>";
+					elementHtml += "<div class=\"line\">";
+						elementHtml += "<div class=\"line-title\">Firstname</div>";
+						elementHtml += "<div class=\"line-data\">" + interface.data.profile.firstname + "</div>";
+					elementHtml += "</div>";
+					elementHtml += "<div class=\"line\">";
+						elementHtml += "<div class=\"line-title\">Birthdate</div>";
+						elementHtml += "<div class=\"line-data\">" + interface.data.profile.birthdate + "</div>";
+					elementHtml += "</div>";
+					elementHtml += "<div class=\"line\">";
+						elementHtml += "<div class=\"line-title\">Sexe</div>";
+						elementHtml += "<div class=\"line-data\">" + interface.data.profile.sexe + "</div>";
+					elementHtml += "</div>";
+				elementHtml += "</div>";
+				elementHtml += "<div class=\"lineDivideTwo\">";
+					elementHtml += "<div class=\"line\">";
+						elementHtml += "<div class=\"line-title\">Avatar</div>";
+						elementHtml += "<div class=\"line-data\"><img class=\"\" src=\"" + interface.data.profile.avatar + "\"></div>";
+					elementHtml += "</div>";
+					elementHtml += "<div class=\"line\">";
+						elementHtml += "<div class=\"line-title\">Lists Total</div>";
+						elementHtml += "<div class=\"line-data\">" + interface.data.profile.lists.length + "</div>";
+					elementHtml += "</div>";
+				elementHtml += "</div>";
+			elementHtml += "</div>";
 		}
 		else if (interface.info.currentPage == "list-history")
 		{

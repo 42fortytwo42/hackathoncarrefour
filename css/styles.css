@@ -33,7 +33,7 @@ html, body {
 }
 
 #menu {
-	background: rgba(255, 165, 0, 0.5);
+	background: rgba(0,91,171,0.5);
     position: absolute;
     top: 91px;
     right: 0px;
@@ -124,6 +124,33 @@ html, body {
     text-align: right;
 }
 
+#main-content {
+	text-align: center;
+}
+
+.lineDivideTwo {
+	width: 50%;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.line {
+	width: 100%;
+    margin-bottom: 20px;
+    border-right: solid 1px blue;
+}
+
+.line-title {
+	text-align: left;
+    padding-left: 15px;
+    font-size: 1.4em;
+}
+
+.line-data {
+	font-size: 1.7em;
+    font-style: italic;
+}
+
 #shortcuts {
 	width: 100%;
 	text-align: center;
@@ -198,4 +225,15 @@ html, body {
 		-webkit-transform: translateX(0%);
     	transform: translateX(0%);
 	}
+}
+
+
+/*** Gradients ***/
+
+.line {
+	background: #ebf1f6; /* Old browsers */
+	background: -moz-linear-gradient(left,  #ebf1f6 0%, #abd3ee 80%, #abd3ee 80%, #89c3eb 94%, #d5ebfb 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(left,  #ebf1f6 0%,#abd3ee 80%,#abd3ee 80%,#89c3eb 94%,#d5ebfb 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right,  #ebf1f6 0%,#abd3ee 80%,#abd3ee 80%,#89c3eb 94%,#d5ebfb 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebf1f6', endColorstr='#d5ebfb',GradientType=1 ); /* IE6-9 */
 }
