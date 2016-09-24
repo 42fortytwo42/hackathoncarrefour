@@ -106,19 +106,27 @@ interface.productsDisplay = function(data)
 
 	//générer le template.
 	var productsListHtml = "";
+	var checkShortcuts = 0;
 	for (var j = 0; productsList[j]; j++)
 	{
 		console.log("probability => " + productsList[j].probability + " limite => " + interface.data.profile.probabilityLimit);
 		if (productsList[j].probability >= interface.data.profile.probabilityLimit)
 			var inputCheckBox = "<input type=\"checkbox\" name=\"product\" value=\"" + productsList[j].id + "\" checked>";
 		else
+		{
+			if (checkShortcuts == 0)
+				productsListHtml += interface.shortcuts();
+			checkShortcuts = checkShortcuts + 1;
 			var inputCheckBox = "<input type=\"checkbox\" name=\"product\" value=\"" + productsList[j].id + "\">";
+		}
 		productsListHtml += "<div class=\"product-line\" style=\"background:" + productsList[j].probabilityRGBA + "\"><div class=\"product-checkbox\">" + inputCheckBox + "</div><div class=\"product-name\">" + productsList[j].name + "</div></div>";
 	}
+	if (checkShortcuts == 0)
+		productsListHtml += interface.shortcuts();
 	if (productsList.length > 0)
 		return productsListHtml;
 	else
-		return "No data to analyze yet";
+		return "No data to analyze yet, add a product !";
 	//placer le background de couleur
 	//selectionner automatiquement les données supérieures à la moyenne de l'utilisateur
 }
@@ -151,12 +159,15 @@ interface.compose = function(data)
 			elementHtml += "<div id=\"main-content\">";
 				elementHtml += interface.productsDisplay({option:'probability'});
 			elementHtml += "</div>";
-			elementHtml += interface.shortcuts();
 		}
 		else if (interface.info.currentPage == "settings")
 		{
 			elementHtml += interface.pageTitle({title:'Settings'});
 			elementHtml += "<div id=\"main-content\">";
+
+				interface.data.profile.probabilityColor.r
+				interface.data.profile.probabilityColor.g
+				interface.data.profile.probabilityColor.b
 
 			elementHtml += "</div>";
 		}
