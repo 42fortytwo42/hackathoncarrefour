@@ -108,11 +108,12 @@ interface.productsDisplay = function(data)
 	var productsListHtml = "";
 	for (var j = 0; productsList[j]; j++)
 	{
-		if (productsList[j].probability >= interface.data.probabilityLimit)
+		console.log("probability => " + productsList[j].probability + " limite => " + interface.data.profile.probabilityLimit);
+		if (productsList[j].probability >= interface.data.profile.probabilityLimit)
 			var inputCheckBox = "<input type=\"checkbox\" name=\"product\" value=\"" + productsList[j].id + "\" checked>";
 		else
 			var inputCheckBox = "<input type=\"checkbox\" name=\"product\" value=\"" + productsList[j].id + "\">";
-		productsListHtml += "<div style=\"background:" + productsList[j].probabilityRGBA + "\">" + inputCheckBox + " - " + productsList[j].name + "</div>";
+		productsListHtml += "<div class=\"product-line\" style=\"background:" + productsList[j].probabilityRGBA + "\"><div class=\"product-checkbox\">" + inputCheckBox + "</div><div class=\"product-name\">" + productsList[j].name + "</div></div>";
 	}
 	if (productsList.length > 0)
 		return productsListHtml;
@@ -287,6 +288,27 @@ interface.data = {
 				"price": 2.31,
 				"img": "cafe.jpg",
 				"probability": 48,
+				"promo": 1
+			}, {
+				"id": "09846566578",
+				"name": "Café Caféiné",
+				"price": 2.31,
+				"img": "cafe.jpg",
+				"probability": 18,
+				"promo": 1
+			}, {
+				"id": "09846566755",
+				"name": "Préservatifs",
+				"price": 12.31,
+				"img": "cafe.jpg",
+				"probability": 98,
+				"promo": 1
+			}, {
+				"id": "09846565865",
+				"name": "Sucettes",
+				"price": 5.87,
+				"img": "cafe.jpg",
+				"probability": 28,
 				"promo": 1
 			}]
 		}]
