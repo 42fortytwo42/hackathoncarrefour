@@ -6,6 +6,17 @@ interface.elements = {};
 interface.info = {};
 interface.info.currentPage = "home";
 
+interface.shortcuts = function()
+{
+	var shortcuts = "";
+	shortcuts += "<div id=\"shortcuts\">";
+		shortcuts += "<img class=\"shortcut\" src=\"img/icon1.png\" />";
+		shortcuts += "<img class=\"shortcut\" src=\"img/icon2.png\" />";
+		shortcuts += "<img class=\"shortcut\" src=\"img/icon3.png\" />";
+	shortcuts += "</div>";
+	return shortcuts;
+}
+
 interface.navigate = function(data)
 {
 	if (interface.info.menuOpened == 1)
@@ -14,27 +25,44 @@ interface.navigate = function(data)
 	interface.render();
 }
 
+interface.pageTitle = function(data)
+{
+	var pageTitle = "";
+	pageTitle += "<div id=\"page-title\">";
+		pageTitle += "<div id=\"page-title-name\"> > " + data.title + "</div>";
+		pageTitle += "<div id=\"page-title-user\">" + interface.data.profile.firstname + "'s Lists</div>";
+	pageTitle += "</div>";
+	return pageTitle;
+}
+
 interface.info.menuOpened = 0;
+interface.info.menuOperating = 0;
+
 interface.menu = function()
 {
-	if (interface.info.menuOpened == 0)
+	if (interface.info.menuOpened == 0 && interface.info.menuOperating == 0)
 	{
-		//open menu
+		//alert('open');
+		interface.info.menuOperating = 1;
 		document.getElementById('menu').style.display = "block";
-		//document.getElementById('menu').className = "animateFromRight";
-
+		document.getElementById('menu').className = "animateFromRight";
+		//document.getElementById('menu').className = "";
 		document.getElementById('mainView').className = "blurred";
 		document.getElementById('footer').className = "blurred";
 		interface.info.menuOpened = 1;
+		setTimeout(function(){interface.info.menuOperating = 0;}, 700);
 	}
-	else
+	else if (interface.info.menuOpened == 1 && interface.info.menuOperating == 0)
 	{
-		//close menu
-		document.getElementById('menu').style.display = "none";
-		//document.getElementById('menu').className = "animateFromLeft";
+		//alert('close');
+		interface.info.menuOperating = 1;
+		document.getElementById('menu').className = "animateFromLeft";
 		document.getElementById('mainView').className = "";
 		document.getElementById('footer').className = "";
+		//document.getElementById('menu').className = "blurred";
 		interface.info.menuOpened = 0;
+		setTimeout(function(){document.getElementById('menu').style.display = "none"; interface.info.menuOperating = 0;}, 700);
+		
 	}
 }
 
@@ -46,7 +74,7 @@ interface.compose = function(data)
 		elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'home'})\">Home</div>";
 		elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'list-history'})\">My Lists</div>";
 		elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'account'})\">Account</div>";
-		elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'setting'})\">Setting</div>";
+		elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'settings'})\">Settings</div>";
 		elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'whoweare'})\">whoweare</div>";
 	}
 	else if (data.element == "menu-bar")
@@ -62,16 +90,31 @@ interface.compose = function(data)
 	{
 		if (interface.info.currentPage == "home")
 		{
-			elementHtml += "<h2>Hey " + interface.data.profile.firstname + " ! You can write your new Smart List here :</h2>";
+			elementHtml += interface.pageTitle({title:'Home'});
+			elementHtml += "<h2>You can write your new Smart List here</h2>";
+			elementHtml += interface.shortcuts();
 		}
-		else if (interface.info.currentPage == "setting")
+		else if (interface.info.currentPage == "settings")
+		{
+			elementHtml += interface.pageTitle({title:'Settings'});
 			elementHtml += "MySmartList Settings";
+		}
 		else if (interface.info.currentPage == "whoweare")
+		{
+			elementHtml += interface.pageTitle({title:'Who We Are !'});
 			elementHtml += "Who we are";
+		}
 		else if (interface.info.currentPage == "account")
+		{
+			elementHtml += interface.pageTitle({title:'Account'});
 			elementHtml += "Account Page";
+		}
 		else if (interface.info.currentPage == "list-history")
+		{
+			elementHtml += interface.pageTitle({title:'My Saved Lists'});
 			elementHtml += "My Last Lists";
+			elementHtml += interface.shortcuts();
+		}
 	}
 	else if (data.element == "footer")
 	{
