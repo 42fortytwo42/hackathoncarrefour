@@ -8,6 +8,8 @@ interface.info.currentPage = "home";
 
 interface.navigate = function(data)
 {
+	if (interface.info.menuOpened == 1)
+		interface.menu();
 	interface.info.currentPage = data.page;
 	interface.render();
 }
@@ -18,10 +20,14 @@ interface.menu = function()
 	if (interface.info.menuOpened == 0)
 	{
 		//open menu
+		document.getElementById('menu').style.display = "block";
+		interface.info.menuOpened = 1;
 	}
 	else
 	{
 		//close menu
+		document.getElementById('menu').style.display = "none";
+		interface.info.menuOpened = 0;
 	}
 }
 
@@ -30,17 +36,18 @@ interface.compose = function(data)
 	var elementHtml = "";
 	if (data.element == "menu")
 	{
-		elementHtml += "<div id=\"menu\">";
-			elementHtml += "<div onclick=\"interface.navigate({'page':'home'})\">Home</div>";
-			elementHtml += "<div onclick=\"interface.navigate({'page':'account'})\">Account</div>";
-			elementHtml += "<div onclick=\"interface.navigate({'page':'setting'})\">Setting</div>";
-		elementHtml += "</div>";
+		elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'home'})\">Home</div>";
+		elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'account'})\">Account</div>";
+		elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'setting'})\">Setting</div>";
+		elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'whoweare'})\">whoweare</div>";
 	}
 	else if (data.element == "menu-bar")
 	{
-		elementHtml += "<div id=\"menu-bar\">";
-			elementHtml += "<div onclick=\"interface.navigate({'page':'home'})\">Logo</div>";
-			elementHtml += "<div onclick=\"interface.menu()\">Menu</div>";
+		elementHtml += "<div class=\"left\">";
+			elementHtml += "<div id=\"logo\" onclick=\"interface.navigate({'page':'home'})\"></div>";
+		elementHtml += "</div>";
+		elementHtml += "<div class=\"right\">";
+			elementHtml += "<div id=\"menu-caller\" onclick=\"interface.menu()\"></div>";
 		elementHtml += "</div>";
 	}
 	else if (data.element == "mainView")
@@ -49,14 +56,18 @@ interface.compose = function(data)
 		{
 			elementHtml += "My Smart List :";
 		}
-		else if (interface.info.currentPage == "settings")
+		else if (interface.info.currentPage == "setting")
 			elementHtml += "MySmartList Settings";
+		else if (interface.info.currentPage == "whoweare")
+			elementHtml += "Who we are";
+		else if (interface.info.currentPage == "account")
+			elementHtml += "Account Page";
 	}
 	else if (data.element == "footer")
 	{
 		elementHtml += "Hackathon Carrefour by BeMyApp 2016 &copy; - MySmartList &copy;";
 	}
-	return element;
+	return elementHtml;
 }
 
 interface.render = function()
@@ -70,16 +81,17 @@ interface.render = function()
 
 interface.update = function()
 {
-	getElementById('menu').innerHTML = interface.elements.menu;
-	getElementById('menu-bar').innerHTML = interface.elements.menuBar;
-	getElementById('mainView').innerHTML = interface.elements.mainView;
-	getElementById('footer').innerHTML = interface.elements.footer;
+	document.getElementById('menu').innerHTML = interface.elements.menu;
+	document.getElementById('menu-bar').innerHTML = interface.elements.menuBar;
+	document.getElementById('mainView').innerHTML = interface.elements.mainView;
+	document.getElementById('footer').innerHTML = interface.elements.footer;
 }
 
 interface.construct = function()
 {
 	var menu = document.createElement("div");
 	menu.id = "menu";
+	menu.style.display = "none";
 	document.body.appendChild(menu);
 	var menuBar = document.createElement("div");
 	menuBar.id = "menu-bar";
