@@ -66,6 +66,62 @@ interface.menu = function()
 	}
 }
 
+interface.productsDisplayCheckDouble = function(product, productList)
+{
+	var double = 0;
+	for (var e = 0; productList[e]; e++)
+	{
+		if (productList[e].id == product.id)
+		{
+			double = 1;
+			break;
+		}
+	}
+	return double;
+}
+
+interface.productsDisplay = function(data)
+{
+	var productsList = [];
+	for (var i = 0; interface.data.profile.lists[i]; i++)
+	{
+		for (var z = 0; interface.data.profile.lists[i].products[z]; z++)
+		{
+			if (interface.productsDisplayCheckDouble(interface.data.profile.lists[i].products[z], productsList) == 0)
+			{
+				//set color with probability
+				var probabilityRGBATransparency = interface.data.profile.lists[i].products[z].probability / 100;
+				interface.data.profile.lists[i].products[z].probabilityRGBA = "rgba(" + interface.data.profile.probabilityColor.r + "," + interface.data.profile.probabilityColor.g + "," + interface.data.profile.probabilityColor.b + "," + probabilityRGBATransparency + ")";
+				productsList.push(interface.data.profile.lists[i].products[z]);
+			}
+		}
+	}
+	productsList.sort(function (a, b){
+	    if (a.probability < b.probability)
+	      return 1;
+	    if (a.probability > b.probability)
+	      return -1;
+	    return 0;
+	});
+
+	//générer le template.
+	var productsListHtml = "";
+	for (var j = 0; productsList[j]; j++)
+	{
+		if (productsList[j].probability >= interface.data.probabilityLimit)
+			var inputCheckBox = "<input type=\"checkbox\" name=\"product\" value=\"" + productsList[j].id + "\" checked>";
+		else
+			var inputCheckBox = "<input type=\"checkbox\" name=\"product\" value=\"" + productsList[j].id + "\">";
+		productsListHtml += "<div style=\"background:" + productsList[j].probabilityRGBA + "\">" + inputCheckBox + " - " + productsList[j].name + "</div>";
+	}
+	if (productsList.length > 0)
+		return productsListHtml;
+	else
+		return "No data to analyze yet";
+	//placer le background de couleur
+	//selectionner automatiquement les données supérieures à la moyenne de l'utilisateur
+}
+
 interface.compose = function(data)
 {
 	var elementHtml = "";
@@ -92,7 +148,7 @@ interface.compose = function(data)
 		{
 			elementHtml += interface.pageTitle({title:'Home'});
 			elementHtml += "<div id=\"main-content\">";
-
+				elementHtml += interface.productsDisplay({option:'probability'});
 			elementHtml += "</div>";
 			elementHtml += interface.shortcuts();
 		}
@@ -194,8 +250,6 @@ interface.construct = function()
 	interface.render();
 }
 
-
-
 interface.data = {
 	"profile": {
 		"firstname": "Henri",
@@ -203,6 +257,12 @@ interface.data = {
 		"birthdate": "20-10-1985",
 		"sexe": "male",
 		"avatar": "avatar.jpg",
+		"probabilityLimit": 55,
+		"probabilityColor": {
+			"r": 17,
+			"g": 237,
+			"b": 46
+		},
 		"lists": [{
 			"dateCreation": "23-09-2016",
 			"shared": "0",
@@ -211,18 +271,33 @@ interface.data = {
 				"id": "044016223",
 				"name": "Haricots Verts",
 				"price": 0.98,
-				"img": "haricots.jpg"
+				"img": "haricots.jpg",
+				"probability": 88,
+				"promo": 1
 			}, {
 				"id": "049849681",
 				"name": "Shampoing l'Oréal",
 				"price": 2.48,
-				"img": "shampoing.jpg"
+				"img": "shampoing.jpg",
+				"probability": 69,
+				"promo": 1
 			}, {
 				"id": "098465665",
 				"name": "Café Décaféiné",
 				"price": 2.31,
-				"img": "cafe.jpg"
+				"img": "cafe.jpg",
+				"probability": 48,
+				"promo": 1
 			}]
 		}]
 	}
 };
+
+
+/*
+
+function hexToR(h) {return parseInt((cutHex(h)).substring(0,2),16)}
+function hexToG(h) {return parseInt((cutHex(h)).substring(2,4),16)}
+function hexToB(h) {return parseInt((cutHex(h)).substring(4,6),16)}
+
+*/

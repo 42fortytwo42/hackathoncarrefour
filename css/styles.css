@@ -49,6 +49,7 @@ html, body {
     font-size: 2.4em;
     font-weight: bold;
     margin-bottom: 50px;
+    cursor: pointer;
 }
 
 #menu div.button:hover {
