@@ -6,10 +6,13 @@ interface.elements = {};
 interface.info = {};
 interface.info.currentPage = "home";
 
-interface.shortcuts = function()
+interface.shortcuts = function(data)
 {
 	var shortcuts = "";
 	shortcuts += "<div id=\"shortcuts\">";
+
+	if (typeof data !== "undefined" && data.totalEstimated !== "undefined")
+		shortcuts += "<div class=\"shortcut-total-estimated\"><div class=\"shortcut-total-estimated-text\">Cout Total Estimé</div><div class=\"shortcut-total-estimated-price\">" + data.totalEstimated.toFixed(2) + "€</div></div>";
 		shortcuts += "<img class=\"shortcut\" src=\"img/icon1.png\" />";
 		shortcuts += "<img class=\"shortcut\" src=\"img/icon2.png\" />";
 		shortcuts += "<img class=\"shortcut\" src=\"img/icon3.png\" />";
@@ -107,19 +110,27 @@ interface.productsDisplay = function(data)
 	//générer le template.
 	var productsListHtml = "";
 	var checkShortcuts = 0;
+	var total = 0;
+	var productsListSaved = [];
 	for (var j = 0; productsList[j]; j++)
 	{
 		console.log("probability => " + productsList[j].probability + " limite => " + interface.data.profile.probabilityLimit);
 		if (productsList[j].probability >= interface.data.profile.probabilityLimit)
+		{
+			total = total + productsList[j].price;
 			var inputCheckBox = "<input type=\"checkbox\" name=\"product\" value=\"" + productsList[j].id + "\" checked>";
+			productsListSaved.push(productsList[j]);
+		}
 		else
 		{
 			if (checkShortcuts == 0)
-				productsListHtml += interface.shortcuts();
+			{
+				productsListHtml += interface.shortcuts({productsToShop:productsListSaved, totalEstimated:total});
+			}
 			checkShortcuts = checkShortcuts + 1;
 			var inputCheckBox = "<input type=\"checkbox\" name=\"product\" value=\"" + productsList[j].id + "\">";
 		}
-		productsListHtml += "<div class=\"product-line\" style=\"background:" + productsList[j].probabilityRGBA + "\"><div class=\"product-checkbox\">" + inputCheckBox + "</div><div class=\"product-name\">" + productsList[j].name + "</div></div>";
+		productsListHtml += "<div class=\"product-line\" style=\"background:" + productsList[j].probabilityRGBA + "\"><div class=\"product-checkbox\">" + inputCheckBox + "</div><div class=\"product-name\">" + productsList[j].name + "</div><div class=\"product-price\">" + productsList[j].price + "€</div></div>";
 	}
 	if (checkShortcuts == 0)
 		productsListHtml += interface.shortcuts();

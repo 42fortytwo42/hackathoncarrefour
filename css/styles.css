@@ -177,6 +177,13 @@ input[type="checkbox"] {
     margin-left: 5px;
 }
 
+.product-price {
+	float: right;
+    font-size: 1.65em;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
 #shortcuts {
 	width: 100%;
 	text-align: center;
@@ -191,6 +198,26 @@ input[type="checkbox"] {
 	height:85px;
 	vertical-align: middle;
 	cursor:pointer;
+}
+
+.shortcut-total-estimated {
+	margin-bottom: -2px;
+    margin-top: 19px;
+}
+
+.shortcut-total-estimated-text {
+	width: 50%;
+    display: inline-block;
+    text-align: right;
+    font-size: 1.65em;
+    font-style: italic;
+}
+
+.shortcut-total-estimated-price {
+	width: 50%;
+    display: inline-block;
+	font-size: 2.0em;
+	font-size: 2.8em;
 }
 
 #footer {
