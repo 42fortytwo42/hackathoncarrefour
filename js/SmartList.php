@@ -462,7 +462,7 @@ interface.compose = function(data)
 			elementHtml += "<img class=\"page-demo\" src=\"img/icon1.png\" onclick=\"interface.navigate({'page':'page-abuse'})\" />";
 			elementHtml += "<img class=\"page-demo\" src=\"img/icon2.png\" onclick=\"interface.navigate({'page':'page-abuse'})\" />";
 			elementHtml += "<img class=\"page-demo\" src=\"img/icon3.png\" onclick=\"interface.navigate({'page':'page-abuse'})\" />";
-			elementHtml += "<div class=\"home-go\" onclick=\"interface.navigate({'page':'page-demo'})\">Tu irais pour moi chéri(e) ?</div>";
+			elementHtml += "<br><br><br><div class=\"home-go\" onclick=\"interface.navigate({'page':'page-demo'})\">Tu irais pour moi chéri(e) ?</div>";
 		}
 		else if (interface.info.currentPage == "page-abuse")
 		{
