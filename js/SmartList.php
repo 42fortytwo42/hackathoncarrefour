@@ -131,22 +131,22 @@ interface.productsDisplayCheckDouble = function(product, productList)
 interface.productsDisplay = function(data)
 {
 	var productsList = [];
-	for (var i = 0; interface.data.profile.lists[i]; i++)
-	{
-		for (var z = 0; interface.data.profile.lists[i].products[z]; z++)
+	//for (var i = 0; interface.data.profile.lists[i]; i++)
+	//{
+		for (var z = 0; interface.json.productDescription[z]; z++)
 		{
-			if (interface.productsDisplayCheckDouble(interface.data.profile.lists[i].products[z], productsList) == 0)
+			if (interface.productsDisplayCheckDouble(interface.json.productDescription[z], productsList) == 0)
 			{
-				var probabilityRGBATransparency = interface.data.profile.lists[i].products[z].probability / 100;
-				interface.data.profile.lists[i].products[z].probabilityRGBA = "rgba(" + interface.data.profile.probabilityColor.r + "," + interface.data.profile.probabilityColor.g + "," + interface.data.profile.probabilityColor.b + "," + probabilityRGBATransparency + ")";
-				productsList.push(interface.data.profile.lists[i].products[z]);
+				var probabilityRGBATransparency = interface.json.productDescription[z].QANTITY_x / 100;
+				interface.json.productDescription[z].probabilityRGBA = "rgba(" + interface.data.profile.probabilityColor.r + "," + interface.data.profile.probabilityColor.g + "," + interface.data.profile.probabilityColor.b + "," + probabilityRGBATransparency + ")";
+				productsList.push(interface.json.productDescription[z]);
 			}
 		}
-	}
+	//}
 	productsList.sort(function (a, b){
-	    if (a.probability < b.probability)
+	    if (a.QANTITY_x < b.QANTITY_x)
 	      return 1;
-	    if (a.probability > b.probability)
+	    if (a.QANTITY_x > b.QANTITY_x)
 	      return -1;
 	    return 0;
 	});
