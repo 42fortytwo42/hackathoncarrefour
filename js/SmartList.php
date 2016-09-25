@@ -466,10 +466,9 @@ interface.compose = function(data)
 		}
 		else if (interface.info.currentPage == "page-abuse")
 		{
-			var i = 0;
-			for (var z = 0; interface.data.profile.lists[i].products[z]; z++)
+			for (var z = 0; interface.json.productDescription[z]; z++)
 			{
-				elementHtml += "<div class=\"product-line\"><div class=\"product-checkbox\"><input type=\"checkbox\" name=\"product\" value=\"" + interface.data.profile.lists[i].products[z].id + "\" checked></div><div class=\"product-name\">" + interface.data.profile.lists[i].products[z].HYP_UB_DESC + "</div></div>";
+				elementHtml += "<div class=\"product-line\"><div class=\"product-checkbox\"><input type=\"checkbox\" name=\"product\" value=\"" + interface.json.productDescription[z].id + "\" checked></div><div class=\"product-name\">" + interface.json.productDescription[z].HYP_UB_DESC + "</div></div>";
 			}
 		}
 	}
