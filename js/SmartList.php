@@ -468,7 +468,7 @@ interface.compose = function(data)
 		{
 			for (var z = 0; interface.json.productDescription[z]; z++)
 			{
-				elementHtml += "<div class=\"product-line\"><div class=\"product-checkbox\"><input type=\"checkbox\" name=\"product\" value=\"" + interface.json.productDescription[z].HYP_UB_DESC + "\" checked></div><div class=\"product-name\">" + interface.json.productDescription[z].HYP_UB_DESC + "</div></div>";
+				elementHtml += "<div class=\"product-line\"><div class=\"product-checkbox\"><input type=\"checkbox\" name=\"product\" value=\"" + interface.json.productDescription[z].HYP_UB_DESC + "\"></div><div class=\"product-name\">" + interface.json.productDescription[z].HYP_UB_DESC + "</div></div>";
 			}
 		}
 	}
