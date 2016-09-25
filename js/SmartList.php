@@ -1,5 +1,8 @@
 
+
 var interface = {};
+
+interface.wildcard = 0;
 
 interface.elements = {};
 
@@ -43,12 +46,17 @@ interface.navigate = function(data)
 
 interface.pageTitle = function(data)
 {
-	var pageTitle = "";
-	pageTitle += "<div id=\"page-title\">";
-		pageTitle += "<div id=\"page-title-name\"> > " + data.title + "</div>";
-		pageTitle += "<div id=\"page-title-user\">" + interface.data.profile.firstname + "'s Lists</div>";
-	pageTitle += "</div>";
-	return pageTitle;
+	if (interface.customozationData.autorizedColors == 1)
+	{
+		var pageTitle = "";
+		pageTitle += "<div id=\"page-title\">";
+			pageTitle += "<div id=\"page-title-name\"> > " + data.title + "</div>";
+			pageTitle += "<div id=\"page-title-user\">" + interface.data.profile.firstname + "'s Lists</div>";
+		pageTitle += "</div>";
+		return pageTitle;
+	}
+	else
+		return "";
 }
 
 interface.info.menuOpened = 0;
@@ -140,7 +148,7 @@ interface.productsDisplay = function(data)
 				else
 				{
 					productsListHtml += "<div class=\"home-middle\"><img src=\"img/plus.png\"><img src=\"img/technology.png\"></div>";
-					productsListHtml += "<div class=\"home-titre\">Et pourquoi pas</div>";
+					productsListHtml += "<div class=\"home-titre\">Et pourquoi pas...</div>";
 				}
 			}
 			checkShortcuts = checkShortcuts + 1;
@@ -160,7 +168,7 @@ interface.productsDisplay = function(data)
 	if (productsList.length == 0)
 		productsListHtml += "No data to analyze yet, add a product !";
 	if (interface.customozationData.autorizedCostLimit == 0)
-		productsListHtml += "<div class=\"home-go\">Go get it !</div>";
+		productsListHtml += "<div class=\"home-go\" onclick=\"interface.navigate({'page':'page-deforce'})\">Go get it !</div>";
 	return productsListHtml;
 }
 
@@ -197,6 +205,16 @@ interface.customizeData = function(data)
 		interface.data.profile.costLimitList = data.value;
 		document.getElementById('option-result-costLimitList').innerHTML = interface.data.profile.costLimitList;
 	}
+	else if (data.option == "wildcard")
+	{
+		interface.wildcard = 1;
+		interface.customozationData = {
+			autorizedColors:1,
+			autorizedCostLimit:1,
+			autorizedProbabilityLimit:1
+		};
+		interface.navigate({'page':'home'});
+	}
 }
 
 interface.compose = function(data)
@@ -212,12 +230,19 @@ interface.compose = function(data)
 	}
 	else if (data.element == "menu-bar")
 	{
-		elementHtml += "<div class=\"left\">";
+		if (interface.wildcard == 1)
+		{
+			elementHtml += "<div class=\"left\">";
+				elementHtml += "<div id=\"logo-realist\" onclick=\"interface.navigate({'page':'home'})\">Rea-List</div>";
+			elementHtml += "</div>";
+			elementHtml += "<div class=\"right\">";
+				elementHtml += "<div id=\"menu-caller\" onclick=\"interface.menu()\"></div>";
+			elementHtml += "</div>";
+		}
+		else
+		{
 			elementHtml += "<div id=\"logo\" onclick=\"interface.navigate({'page':'home'})\"></div>";
-		elementHtml += "</div>";
-		elementHtml += "<div class=\"right\">";
-			elementHtml += "<div id=\"menu-caller\" onclick=\"interface.menu()\"></div>";
-		elementHtml += "</div>";
+		}
 	}
 	else if (data.element == "mainView")
 	{
@@ -286,58 +311,65 @@ interface.compose = function(data)
 		{
 			elementHtml += interface.pageTitle({title:'Who We Are !'});
 			elementHtml += "<div id=\"main-content\">";
-
-			var participants = [
-				{
-					name:"LE MIGNAN Thomas",
-					phone:"06 79 63 87 32",
-					email:"contact@biodeploy.com",
-					linkedin:"https://fr.linkedin.com/in/thomas-le-mignan-29786a87",
-					skill:"Web Developer Full Stack"
-				},
-				{
-					name:"KAYONGA Earvin",
-					phone:"06 41 89 20 12",
-					email:"earvin@earvinkayonga.com",
-					linkedin:"https://fr.linkedin.com/in/earvinkayonga",
-					skill:"Web Dev Full Stack"
-				},
-				{
-					name:"OUSMANE BAWA GAOH Moustapha",
-					phone:"07 55 00 31 40",
-					email:"gaohmoustapha@gmail.com",
-					linkedin:"https://fr.linkedin.com/in/gaohmoustapha ",
-					skill:"DataScientist"
-				},
-				{
-					name:"HAIDARA PIERRE",
-					phone:"0615536978",
-					email:"pehaidara@gmail.com",
-					linkedin:"https://fr.linkedin.com/in/pierre-elias-haidara-72379564",
-					skill:"Data Scientist"
-				},
-				{
-					name:"BOURSIER Bertrand",
-					phone:"06 13 17 34 52",
-					email:"bertrand.boursier@gmail.com",
-					linkedin:"https://www.linkedin.com/in/bertrand-boursier-2107922",
-					skill:"Ruby-on-Rails"
-				},
-				{
-					name:"Cédric Faucheux",
-					phone:"06.14.44.62.16",
-					email:"cedric.faucheux@untienots.com",
-					linkedin:"https://www.linkedin.com/in/",
-					skill:"Data Scientist"
-				},
-				{
-					name:"Zyed JAMOUSSI",
-					phone:"0609861069",
-					email:"zyed@untienots.com",
-					linkedin:"https://www.linkedin.com/in/zyedjamoussi?trk=nav_responsive_tab_profile_pic",
-					skill:"Project Submissioner"
-				}
-			];
+			if (interface.wildcard == 1)
+			{
+				var participants = [
+					{
+						name:"LE MIGNAN Thomas",
+						phone:"06 79 63 87 32",
+						email:"contact@biodeploy.com",
+						linkedin:"https://fr.linkedin.com/in/thomas-le-mignan-29786a87",
+						skill:"Web Developer Full Stack"
+					},
+					{
+						name:"KAYONGA Earvin",
+						phone:"06 41 89 20 12",
+						email:"earvin@earvinkayonga.com",
+						linkedin:"https://fr.linkedin.com/in/earvinkayonga",
+						skill:"Web Dev Full Stack"
+					},
+					{
+						name:"OUSMANE BAWA GAOH Moustapha",
+						phone:"07 55 00 31 40",
+						email:"gaohmoustapha@gmail.com",
+						linkedin:"https://fr.linkedin.com/in/gaohmoustapha ",
+						skill:"DataScientist"
+					},
+					{
+						name:"HAIDARA PIERRE",
+						phone:"0615536978",
+						email:"pehaidara@gmail.com",
+						linkedin:"https://fr.linkedin.com/in/pierre-elias-haidara-72379564",
+						skill:"Data Scientist"
+					},
+					{
+						name:"BOURSIER Bertrand",
+						phone:"06 13 17 34 52",
+						email:"bertrand.boursier@gmail.com",
+						linkedin:"https://www.linkedin.com/in/bertrand-boursier-2107922",
+						skill:"Ruby-on-Rails"
+					}
+				];
+			}
+			else
+			{
+				var participants = [
+					{
+						name:"Cédric Faucheux",
+						phone:"06.14.44.62.16",
+						email:"cedric.faucheux@untienots.com",
+						linkedin:"https://www.linkedin.com/in/",
+						skill:"Data Scientist"
+					},
+					{
+						name:"Zyed JAMOUSSI",
+						phone:"0609861069",
+						email:"zyed@untienots.com",
+						linkedin:"https://www.linkedin.com/in/zyedjamoussi?trk=nav_responsive_tab_profile_pic",
+						skill:"Project Submissioner"
+					}
+				];
+			}
 
 			for (var deusexmachina = 0; participants[deusexmachina]; deusexmachina++)
 			{
@@ -355,7 +387,7 @@ interface.compose = function(data)
 		{
 			elementHtml += interface.pageTitle({title:'User Account'});
 			elementHtml += "<div id=\"main-content\">";
-				elementHtml += "<div class=\"lineDivideTwo\">";
+				//elementHtml += "<div class=\"lineDivideTwo\">";
 					elementHtml += "<div class=\"line\">";
 						elementHtml += "<div class=\"line-title\">Lastname</div>";
 						elementHtml += "<div class=\"line-data\">" + interface.data.profile.lastname + "</div>";
@@ -372,44 +404,56 @@ interface.compose = function(data)
 						elementHtml += "<div class=\"line-title\">Sexe</div>";
 						elementHtml += "<div class=\"line-data\">" + interface.data.profile.sexe + "</div>";
 					elementHtml += "</div>";
-				elementHtml += "</div>";
-				elementHtml += "<div class=\"lineDivideTwo\">";
-					elementHtml += "<div class=\"line\">";
-						elementHtml += "<div class=\"line-title\">Avatar</div>";
-						elementHtml += "<div class=\"line-data\"><img class=\"\" src=\"" + interface.data.profile.avatar + "\"></div>";
-					elementHtml += "</div>";
-					elementHtml += "<div class=\"line\">";
-						elementHtml += "<div class=\"line-title\">Lists Total</div>";
-						elementHtml += "<div class=\"line-data\">" + interface.data.profile.lists.length + "</div>";
-					elementHtml += "</div>";
-				elementHtml += "</div>";
+				//elementHtml += "</div>";
+				//elementHtml += "<div class=\"lineDivideTwo\">";
+					//elementHtml += "<div class=\"line\">";
+						//elementHtml += "<div class=\"line-title\">Avatar</div>";
+						//elementHtml += "<div class=\"line-data\"><img class=\"\" src=\"" + interface.data.profile.avatar + "\"></div>";
+					//elementHtml += "</div>";
+					//elementHtml += "<div class=\"line\">";
+						//elementHtml += "<div class=\"line-title\">Lists Total</div>";
+						//elementHtml += "<div class=\"line-data\">" + interface.data.profile.lists.length + "</div>";
+					//elementHtml += "</div>";
+				//elementHtml += "</div>";
 			elementHtml += "</div>";
 		}
 		else if (interface.info.currentPage == "list-history")
 		{
 			elementHtml += interface.pageTitle({title:'My Saved Lists'});
-			elementHtml += "My Last Lists";
+			elementHtml += "<div class=\"line\">";
+				elementHtml += "<div class=\"line-title\">Lists Total</div>";
+				elementHtml += "<div class=\"line-data\">" + interface.data.profile.lists.length + "</div>";
+				elementHtml += "<div class=\"line-title\">Lists Total</div>";
+				elementHtml += "<div class=\"line-data\">" + interface.data.profile.lists[0].dateCreation + "</div>";
+				elementHtml += "<div class=\"line-title\">Total Share of this list</div>";
+				elementHtml += "<div class=\"line-data\">" + interface.data.profile.lists[0].shared + "</div>";
+			elementHtml += "</div>";
+
 			// Compter les listes
 			// accéder aux listes enregistrées
 		}
 		else if (interface.info.currentPage == "page-deforce")
 		{
-			//elementHtml += interface.pageTitle({title:'My Saved Lists'});
-			//elementHtml += "My Last Lists";
-			// Compter les listes
-			// accéder aux listes enregistrées
 			elementHtml += "<img class=\"page-deforce\" src=\"img/icon1.png\" onclick=\"interface.navigate({'page':'page-abuse'})\" />";
 			elementHtml += "<img class=\"page-deforce\" src=\"img/icon2.png\" onclick=\"interface.navigate({'page':'page-abuse'})\" />";
 			elementHtml += "<img class=\"page-deforce\" src=\"img/icon3.png\" onclick=\"interface.navigate({'page':'page-abuse'})\" />";
+			elementHtml += "<div class=\"home-go\" onclick=\"interface.navigate({'page':'page-deforce'})\">Tu irais pour moi chéri(e) ?</div>";
 		}
 		else if (interface.info.currentPage == "page-abuse")
 		{
-			elementHtml += "voila";
+			var i = 0;
+			for (var z = 0; interface.data.profile.lists[i].products[z]; z++)
+			{
+				elementHtml += "<div class=\"product-line\"><div class=\"product-checkbox\"><input type=\"checkbox\" name=\"product\" value=\"" + interface.data.profile.lists[i].products[z].id + "\" checked></div><div class=\"product-name\">" + interface.data.profile.lists[i].products[z].name + "</div></div>";
+			}
 		}
 	}
 	else if (data.element == "footer")
 	{
-		elementHtml += "<div>Hackathon Carrefour by BeMyApp 2016 &copy; From Scratch @48hours !</div>";
+		if (interface.wildcard == 1)
+			elementHtml += "<div style=\"display:inline-block\">Hackathon Carrefour by BeMyApp 2016 &copy; </div><div style=\"display:inline-block\" onclick=\"interface.customizeData({option:'wildcard'})\"> From Scratch @48hours !</div>";
+		else
+			elementHtml += "<div style=\"display:inline-block\" onclick=\"interface.navigate({'page':'whoweare'})\">Qui Sommes-nous ? - </div><div style=\"display:inline-block\" onclick=\"interface.customizeData({option:'wildcard'})\">  BeMyApp &copy;</div>";
 	}
 	return elementHtml;
 }
@@ -446,7 +490,6 @@ interface.construct = function()
 	var footer = document.createElement("div");
 	footer.id = "footer";
 	document.body.appendChild(footer);
-	//Init rendering
 	interface.render();
 }
 
@@ -514,12 +557,3 @@ interface.data = {
 		}]
 	}
 };
-
-
-/*
-
-function hexToR(h) {return parseInt((cutHex(h)).substring(0,2),16)}
-function hexToG(h) {return parseInt((cutHex(h)).substring(2,4),16)}
-function hexToB(h) {return parseInt((cutHex(h)).substring(4,6),16)}
-
-*/
