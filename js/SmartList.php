@@ -149,7 +149,7 @@ interface.productsDisplay = function(data)
 		}
 		
 
-		//productsList = interface.json.productDescription;
+		interface.json.productDescription = productsList;
 
 console.log(productsList);
 		
@@ -213,7 +213,7 @@ console.log(productsList);
 	if (productsList.length == 0)
 		productsListHtml += "No data to analyze yet, add a product !";
 	if (interface.customozationData.autorizedCostLimit == 0)
-		productsListHtml += "<div class=\"home-go\" onclick=\"interface.navigate({'page':'page-demo'})\">Go get it !</div>";
+		productsListHtml += "<br><br><br><div class=\"home-go\" onclick=\"interface.navigate({'page':'page-demo'})\">Go get it !</div>";
 	return productsListHtml;
 }
 
@@ -414,7 +414,7 @@ interface.compose = function(data)
 			for (var deusexmachina = 0; participants[deusexmachina]; deusexmachina++)
 			{
 				elementHtml += "<div class=\"participant\">";
-					elementHtml += "<div class=\"participant-text\">Name</div><div class=\"participant-data name\">" + participants[deusexmachina].HYP_UB_DESC + "</div>";
+					elementHtml += "<div class=\"participant-text\">Name</div><div class=\"participant-data name\">" + participants[deusexmachina].name + "</div>";
 					elementHtml += "<div class=\"participant-text\">Phone</div><div class=\"participant-data\">" + participants[deusexmachina].phone + "</div>";
 					elementHtml += "<div class=\"participant-text\">Email</div><div class=\"participant-data\">" + participants[deusexmachina].email + "</div>";
 					elementHtml += "<div class=\"participant-text\">LinkedIn</div><div class=\"participant-data linkedin\"><a href=\"" + participants[deusexmachina].linkedin + "\">Click here !</a></div>";
@@ -579,13 +579,13 @@ interface.data = {
 		"birthdate": "20-10-1985",
 		"sexe": "male",
 		"avatar": "avatar.jpg",
-		"probabilityLimit": 55,
+		"probabilityLimit": 45,
 		"probabilityColor": {
 			"r": 100,
 			"g": 100,
 			"b": 0
 		},
-		"costLimitList":25,
+		"costLimitList":20,
 		"lists": [{
 			"dateCreation": "23-09-2016",
 			"shared": "0",
