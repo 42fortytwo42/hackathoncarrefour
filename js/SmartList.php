@@ -119,7 +119,7 @@ interface.productsDisplayCheckDouble = function(product, productList)
 	var double = 0;
 	for (var e = 0; productList[e]; e++)
 	{
-		if (productList[e].id == product.id)
+		if (productList[e].HYP_UB_DESC == product.HYP_UB_DESC)
 		{
 			double = 1;
 			break;
@@ -137,7 +137,7 @@ interface.productsDisplay = function(data)
 
 	//for (var i = 0; interface.data.profile.lists[i]; i++)
 	//{
-		/*
+		
 		for (var z = 0; interface.json.productDescription[z]; z++)
 		{
 			if (interface.productsDisplayCheckDouble(interface.json.productDescription[z], productsList) == 0)
@@ -147,9 +147,9 @@ interface.productsDisplay = function(data)
 				productsList.push(interface.json.productDescription[z]);
 			}
 		}
-		*/
+		
 
-		productsList = interface.json.productDescription;
+		//productsList = interface.json.productDescription;
 
 
 		
@@ -178,10 +178,10 @@ interface.productsDisplay = function(data)
 			productsListHtml += "<div class=\"red-line-out-of-money\"></div>";
 			overloadedAmountTotal = 1;
 		}
-		if (productsList[j].probability >= interface.data.profile.probabilityLimit && interface.customozationData.autorizedProbabilityLimit == 1 && overloadedAmountTotal == 0)
+		if (productsList[j].QANTITY_x >= interface.data.profile.probabilityLimit && overloadedAmountTotal == 0)
 		{
 			total = total + productsList[j].SAL_AMT_WTAX;
-			var inputCheckBox = "<input type=\"checkbox\" name=\"product\" value=\"" + productsList[j].id + "\" checked>";
+			var inputCheckBox = "<input type=\"checkbox\" name=\"product\" value=\"" + productsList[j].HYP_UB_DESC + "\" checked>";
 			productsListSaved.push(productsList[j]);
 		}
 		else
@@ -197,7 +197,7 @@ interface.productsDisplay = function(data)
 				}
 			}
 			checkShortcuts = checkShortcuts + 1;
-			var inputCheckBox = "<input type=\"checkbox\" name=\"product\" value=\"" + productsList[j].id + "\">";
+			var inputCheckBox = "<input type=\"checkbox\" name=\"product\" value=\"" + productsList[j].HYP_UB_DESC + "\">";
 		}
 		if (interface.customozationData.autorizedCostLimit == 1)
 			var price = "<div class=\"product-price\">" + productsList[j].SAL_AMT_WTAX + "€</div>";
@@ -468,7 +468,7 @@ interface.compose = function(data)
 		{
 			for (var z = 0; interface.json.productDescription[z]; z++)
 			{
-				elementHtml += "<div class=\"product-line\"><div class=\"product-checkbox\"><input type=\"checkbox\" name=\"product\" value=\"" + interface.json.productDescription[z].id + "\" checked></div><div class=\"product-name\">" + interface.json.productDescription[z].HYP_UB_DESC + "</div></div>";
+				elementHtml += "<div class=\"product-line\"><div class=\"product-checkbox\"><input type=\"checkbox\" name=\"product\" value=\"" + interface.json.productDescription[z].HYP_UB_DESC + "\" checked></div><div class=\"product-name\">" + interface.json.productDescription[z].HYP_UB_DESC + "</div></div>";
 			}
 		}
 	}
@@ -504,17 +504,17 @@ interface.preconstruct = function()
 interface.construct = function()
 {
 	var menu = document.createElement("div");
-	menu.id = "menu";
+	menu.HYP_UB_DESC = "menu";
 	menu.style.display = "none";
 	document.body.appendChild(menu);
 	var menuBar = document.createElement("div");
-	menuBar.id = "menu-bar";
+	menuBar.HYP_UB_DESC = "menu-bar";
 	document.body.appendChild(menuBar);
 	var mainView = document.createElement("div");
-	mainView.id = "mainView";
+	mainView.HYP_UB_DESC = "mainView";
 	document.body.appendChild(mainView);
 	var footer = document.createElement("div");
-	footer.id = "footer";
+	footer.HYP_UB_DESC = "footer";
 	document.body.appendChild(footer);
 	interface.render();
 }
