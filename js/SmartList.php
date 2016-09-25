@@ -504,17 +504,17 @@ interface.preconstruct = function()
 interface.construct = function()
 {
 	var menu = document.createElement("div");
-	menu.HYP_UB_DESC = "menu";
+	menu.id = "menu";
 	menu.style.display = "none";
 	document.body.appendChild(menu);
 	var menuBar = document.createElement("div");
-	menuBar.HYP_UB_DESC = "menu-bar";
+	menuBar.id = "menu-bar";
 	document.body.appendChild(menuBar);
 	var mainView = document.createElement("div");
-	mainView.HYP_UB_DESC = "mainView";
+	mainView.id = "mainView";
 	document.body.appendChild(mainView);
 	var footer = document.createElement("div");
-	footer.HYP_UB_DESC = "footer";
+	footer.id = "footer";
 	document.body.appendChild(footer);
 	interface.render();
 }
