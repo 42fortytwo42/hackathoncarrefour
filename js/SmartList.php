@@ -628,10 +628,11 @@ interface.data = {
 	}
 };
 
+interface.json = {};
+
 interface.ask = function(data)
 {
 	var url = "https://mysmartlist.fr/index.php?json";
-    console.log(data);
     
     $.ajax({
         type:'POST',
@@ -639,13 +640,8 @@ interface.ask = function(data)
         dataType:'html',
         data:data
     }).done(function(html){
-        console.log(html);
         console.log("response is : " + html);
-        var ret = JSON.parse(html);
-        console.log(ret);
-        if (typeof ret.process !== 'undefined')
-           interface.callback(ret);
-        else if (typeof ret.error !== 'undefined')
-            console.log('error on asking server');
+        interface.json = JSON.parse(html);
+ 		console.log(interface.json);
     });
 }

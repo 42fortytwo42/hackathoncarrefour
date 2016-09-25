@@ -1,6 +1,6 @@
 
 <?php
-	if (isset($_GET['json']))
+	if (isset($_POST['json']) || isset($_GET['json']))
 	{
 		echo file_get_contents('json/data.json');
 		exit();
