@@ -219,9 +219,9 @@ console.log(productsList);
 		else
 			var price = "";
 		if (interface.customozationData.autorizedColors == 1)
-			productsListHtml += "<div class=\"product-line\" style=\"background:" + productsList[j].probabilityRGBA + "\"><div class=\"product-checkbox\">" + inputCheckBox + "</div><div class=\"product-name\">" + TextAbstract(productsList[j].HYP_UB_DESC[z].HYP_UB_DESC, 30) + "</div>" + price + "</div>";
+			productsListHtml += "<div class=\"product-line\" style=\"background:" + productsList[j].probabilityRGBA + "\"><div class=\"product-checkbox\">" + inputCheckBox + "</div><div class=\"product-name\">" + TextAbstract(productsList[j].HYP_UB_DESC, 22) + "</div>" + price + "</div>";
 		else
-			productsListHtml += "<div class=\"product-line\"><div class=\"product-checkbox\">" + inputCheckBox + "</div><div class=\"product-name\">" + TextAbstract(productsList[j].HYP_UB_DESC[z].HYP_UB_DESC, 30) + "</div>" + price + "</div>";
+			productsListHtml += "<div class=\"product-line\"><div class=\"product-checkbox\">" + inputCheckBox + "</div><div class=\"product-name\">" + TextAbstract(productsList[j].HYP_UB_DESC, 22) + "</div>" + price + "</div>";
 	}
 	if (checkShortcuts == 0)
 		productsListHtml += interface.shortcuts();
@@ -483,7 +483,7 @@ interface.compose = function(data)
 		{
 			for (var z = 0; interface.json.productDescription[z]; z++)
 			{
-				elementHtml += "<div class=\"product-line\"><div class=\"product-checkbox\"><input type=\"checkbox\" name=\"product\" value=\"" + interface.json.productDescription[z].HYP_UB_DESC + "\"></div><div class=\"product-name\">" + TextAbstract(interface.json.productDescription[z].HYP_UB_DESC, 30) + "</div></div>";
+				elementHtml += "<div class=\"product-line\"><div class=\"product-checkbox\"><input type=\"checkbox\" name=\"product\" value=\"" + interface.json.productDescription[z].HYP_UB_DESC + "\"></div><div class=\"product-name\">" + TextAbstract(interface.json.productDescription[z].HYP_UB_DESC, 22) + "</div></div>";
 			}
 		}
 	}
