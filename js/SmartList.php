@@ -208,7 +208,7 @@ console.log(productsList);
 				else
 				{
 					productsListHtml += "<div class=\"home-middle\"><img src=\"img/plus.png\"><img src=\"img/technology.png\"></div>";
-					productsListHtml += "<div class=\"home-titre\">Et pourquoi pas...</div>";
+					productsListHtml += "<div class=\"home-titre\">Et pourquoi pas... Besoin d'inspiration ?</div>";
 				}
 			}
 			checkShortcuts = checkShortcuts + 1;
