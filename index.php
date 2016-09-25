@@ -1,3 +1,11 @@
+
+<?php
+	if (isset($_GET['json']))
+	{
+		echo file_get_contents('json/data.json');
+		exit();
+	}
+?>
 <html>
 	<head>
 		<title>MySmartList!</title>

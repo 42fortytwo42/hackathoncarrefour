@@ -202,7 +202,7 @@ interface.productsDisplay = function(data)
 	if (productsList.length == 0)
 		productsListHtml += "No data to analyze yet, add a product !";
 	if (interface.customozationData.autorizedCostLimit == 0)
-		productsListHtml += "<div class=\"home-go\" onclick=\"interface.navigate({'page':'page-deforce'})\">Go get it !</div>";
+		productsListHtml += "<div class=\"home-go\" onclick=\"interface.navigate({'page':'page-demo'})\">Go get it !</div>";
 	return productsListHtml;
 }
 
@@ -257,26 +257,21 @@ interface.compose = function(data)
 	if (data.element == "menu")
 	{
 		elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'home'})\">Home</div>";
-		elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'list-history'})\">My Lists</div>";
-		elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'account'})\">Account</div>";
+		if (interface.wildcard == 1)
+			elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'list-history'})\">My Lists</div>";
+		if (interface.wildcard == 1)
+			elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'account'})\">Account</div>";
 		elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'settings'})\">Settings</div>";
 		elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'whoweare'})\">Who We Are</div>";
 	}
 	else if (data.element == "menu-bar")
 	{
-		if (interface.wildcard == 1)
-		{
-			elementHtml += "<div class=\"left\">";
-				elementHtml += "<div id=\"logo-realist\" onclick=\"interface.navigate({'page':'home'})\">Rea-List</div>";
-			elementHtml += "</div>";
-			elementHtml += "<div class=\"right\">";
-				elementHtml += "<div id=\"menu-caller\" onclick=\"interface.menu()\"></div>";
-			elementHtml += "</div>";
-		}
-		else
-		{
+		elementHtml += "<div class=\"left\">";
 			elementHtml += "<div id=\"logo\" onclick=\"interface.navigate({'page':'home'})\"></div>";
-		}
+		elementHtml += "</div>";
+		elementHtml += "<div class=\"right\">";
+			elementHtml += "<div id=\"menu-caller\" onclick=\"interface.menu()\"></div>";
+		elementHtml += "</div>";
 	}
 	else if (data.element == "mainView")
 	{
@@ -287,10 +282,19 @@ interface.compose = function(data)
 				elementHtml += interface.productsDisplay({option:'probability'});
 			elementHtml += "</div>";
 		}
+		if (interface.info.currentPage == "add")
+		{
+			elementHtml += interface.pageTitle({title:'Add a reference'});
+			elementHtml += "<div id=\"main-content\">";
+				elementHtml += "Add a Product";
+					// ajouter un produit.
+				elementHtml += "Add a Category";
+					// ajouter une catégorie.
+			elementHtml += "</div>";
+		}
 		else if (interface.info.currentPage == "settings")
 		{
 			elementHtml += interface.pageTitle({title:'Settings'});
-
 			elementHtml += "<div id=\"main-content\">";
 				elementHtml += "<div id=\"option-customization\">";
 					elementHtml += "<div class=\"option-customization-line\">";
@@ -442,12 +446,12 @@ interface.compose = function(data)
 				elementHtml += "<div class=\"line-data\">" + interface.data.profile.lists[0].shared + "</div>";
 			elementHtml += "</div>";
 		}
-		else if (interface.info.currentPage == "page-deforce")
+		else if (interface.info.currentPage == "page-demo")
 		{
-			elementHtml += "<img class=\"page-deforce\" src=\"img/icon1.png\" onclick=\"interface.navigate({'page':'page-abuse'})\" />";
-			elementHtml += "<img class=\"page-deforce\" src=\"img/icon2.png\" onclick=\"interface.navigate({'page':'page-abuse'})\" />";
-			elementHtml += "<img class=\"page-deforce\" src=\"img/icon3.png\" onclick=\"interface.navigate({'page':'page-abuse'})\" />";
-			elementHtml += "<div class=\"home-go\" onclick=\"interface.navigate({'page':'page-deforce'})\">Tu irais pour moi chéri(e) ?</div>";
+			elementHtml += "<img class=\"page-demo\" src=\"img/icon1.png\" onclick=\"interface.navigate({'page':'page-abuse'})\" />";
+			elementHtml += "<img class=\"page-demo\" src=\"img/icon2.png\" onclick=\"interface.navigate({'page':'page-abuse'})\" />";
+			elementHtml += "<img class=\"page-demo\" src=\"img/icon3.png\" onclick=\"interface.navigate({'page':'page-abuse'})\" />";
+			elementHtml += "<div class=\"home-go\" onclick=\"interface.navigate({'page':'page-demo'})\">Tu irais pour moi chéri(e) ?</div>";
 		}
 		else if (interface.info.currentPage == "page-abuse")
 		{
@@ -500,7 +504,60 @@ interface.construct = function()
 	interface.render();
 }
 
+
+
 interface.data = {
+	"statistiques":{},
+	"category":[],
+	"products":[{
+		"id": "044016223",
+		"name": "Haricots Verts",
+		"price": 0.98,
+		"img": "haricots.jpg",
+		"probability": 88,
+		"promo": 1,
+		"category":""
+	}, {
+		"id": "049849681",
+		"name": "Shampoing l'Oréal",
+		"price": 2.48,
+		"img": "shampoing.jpg",
+		"probability": 69,
+		"promo": 1,
+		"category":""
+	}, {
+		"id": "098465665",
+		"name": "Café Décaféiné",
+		"price": 2.31,
+		"img": "cafe.jpg",
+		"probability": 48,
+		"promo": 1,
+		"category":""
+	}, {
+		"id": "09846566578",
+		"name": "Café Caféiné",
+		"price": 2.31,
+		"img": "cafe.jpg",
+		"probability": 18,
+		"promo": 1,
+		"category":""
+	}, {
+		"id": "09846566755",
+		"name": "Snickers",
+		"price": 12.31,
+		"img": "cafe.jpg",
+		"probability": 98,
+		"promo": 1,
+		"category":""
+	}, {
+		"id": "09846565865",
+		"name": "Brochettes de volaille",
+		"price": 5.87,
+		"img": "cafe.jpg",
+		"probability": 28,
+		"promo": 1,
+		"category":""
+	}],
 	"profile": {
 		"firstname": "Henri",
 		"lastname": "Lumière",
@@ -524,43 +581,71 @@ interface.data = {
 				"price": 0.98,
 				"img": "haricots.jpg",
 				"probability": 88,
-				"promo": 1
+				"promo": 1,
+				"category":""
 			}, {
 				"id": "049849681",
 				"name": "Shampoing l'Oréal",
 				"price": 2.48,
 				"img": "shampoing.jpg",
 				"probability": 69,
-				"promo": 1
+				"promo": 1,
+				"category":""
 			}, {
 				"id": "098465665",
 				"name": "Café Décaféiné",
 				"price": 2.31,
 				"img": "cafe.jpg",
 				"probability": 48,
-				"promo": 1
+				"promo": 1,
+				"category":""
 			}, {
 				"id": "09846566578",
 				"name": "Café Caféiné",
 				"price": 2.31,
 				"img": "cafe.jpg",
 				"probability": 18,
-				"promo": 1
+				"promo": 1,
+				"category":""
 			}, {
 				"id": "09846566755",
-				"name": "Préservatifs",
+				"name": "Snickers",
 				"price": 12.31,
 				"img": "cafe.jpg",
 				"probability": 98,
-				"promo": 1
+				"promo": 1,
+				"category":""
 			}, {
 				"id": "09846565865",
-				"name": "Sucettes",
+				"name": "Brochettes de volaille",
 				"price": 5.87,
 				"img": "cafe.jpg",
 				"probability": 28,
-				"promo": 1
+				"promo": 1,
+				"category":""
 			}]
 		}]
 	}
 };
+
+interface.ask = function(data)
+{
+	var url = "https://mysmartlist.fr/index.php?json";
+    console.log(data);
+    
+    $.ajax({
+        type:'POST',
+        url:url,
+        dataType:'html',
+        data:data
+    }).done(function(html){
+        console.log(html);
+        console.log("response is : " + html);
+        var ret = JSON.parse(html);
+        console.log(ret);
+        if (typeof ret.process !== 'undefined')
+           interface.callback(ret);
+        else if (typeof ret.error !== 'undefined')
+            console.log('error on asking server');
+    });
+}

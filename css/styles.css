@@ -79,10 +79,13 @@ html, body {
 
 #logo {
 	background: url(../img/logo.png);
-    height: 83px;
+    height: 81px;
     background-size: 100%;
     background-repeat: no-repeat;
     margin-top: 0px;
+    width: 100%;
+    margin-top: 15px;
+    margin-left: 15px;
 }
 
 #menu-caller {
@@ -145,7 +148,7 @@ html, body {
 }
 
 .home-middle img {
-
+	height: 43px;
 }
 
 .home-go {
@@ -447,7 +450,7 @@ input[type="checkbox"] {
     color:black;
 }
 
-.page-deforce {
+.page-demo {
 	height: 125px;
     width: 125px;
     display: block;
