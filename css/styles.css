@@ -101,6 +101,10 @@ html, body {
 #mainView {
 	padding: 15px;
 	overflow: auto;
+	position: absolute;
+    top: 91px;
+    bottom: 36px;
+    width: 95%;
 }
 
 #page-title {
@@ -128,6 +132,33 @@ html, body {
 #main-content {
     text-align: center;
     margin-bottom: 20px;
+}
+
+.home-titre {
+    font-size: 1.5em;
+    text-align: left;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.home-middle {
+	text-align: left;
+    width: 89%;
+}
+
+.home-middle img {
+
+}
+
+.home-go {
+    background: #ccc;
+    width: 98%;
+    margin: 0 auto;
+    margin-top: 17px;
+    height: 56px;
+    border: solid 1px black;
+    border-radius: 15px;
+    font-size: 2.5em;
 }
 
 .lineDivideTwo {
@@ -220,6 +251,73 @@ input[type="checkbox"] {
 	font-size: 2.8em;
 }
 
+.shortcuts-acceptable-estimation {
+
+}
+
+.shortcuts-acceptable {
+
+}
+
+.shortcuts-unacceptable-estimation {
+
+}
+
+.shortcuts-unacceptable {
+
+}
+
+#option-customization {
+	border: solid 1px #ccc;
+    border-radius: 15px;
+    padding: 10px
+}
+
+.option-customization-line {
+    margin-bottom: 17px;
+}
+
+.option-customization-line-text {
+	text-align: left;
+    font-size: 1.1em;
+    font-style: italic;
+}
+
+.option-customization-line-data {
+    text-align: right;
+    margin-bottom: 15px;
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+.option {
+	border: solid 1px #ccc;
+    border-radius: 15px;
+    margin-top: 25px;
+   	padding: 5px;
+}
+
+.option-text {
+	font-size: 1.1em;
+    font-style: italic;
+}
+
+.option-data {
+    margin-top: 10px;
+}
+
+.option-result-text {
+	font-size: 1.2em;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.option-result-data {
+	display: inline-block;
+    margin-left: 15px;
+    font-size: 1.4em;
+}
+
 #footer {
 	position: absolute;
     bottom: 0px;
@@ -235,6 +333,41 @@ input[type="checkbox"] {
     font-style: italic;
     font-weight: bold;
     font-size: 0.9em;
+}
+
+.participant {
+	width: 75%;
+    margin: 0 auto;
+    border: solid 1px black;
+    margin-bottom: 35px;
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.participant-text {
+	text-align: left;
+    font-size: 1.6em;
+    font-style: italic;
+}
+
+.participant-data {
+	font-size: 1.5em;
+}
+
+.participant-data.name {
+	font-size: 1.6em;
+    font-weight: bold;
+}
+
+.participant-data.linkedin a {
+	font-size: 1.25em;
+    font-weight: bold;
+    text-decoration: none;
+    color:black;
+}
+
+.page-deforce {
+	
 }
 
 /*** Effects ***/
@@ -290,3 +423,9 @@ input[type="checkbox"] {
 	background: linear-gradient(to right,  #ebf1f6 0%,#abd3ee 80%,#abd3ee 80%,#89c3eb 94%,#d5ebfb 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebf1f6', endColorstr='#d5ebfb',GradientType=1 ); /* IE6-9 */
 }
+
+
+/*** Color Picker ***/
+#picker { width: 200px; height: 200px; display: inline-block; }
+#slide { width: 30px; height: 200px; display: inline-block; }
+#color-render { width: 30px; height: 200px; display: inline-block; }

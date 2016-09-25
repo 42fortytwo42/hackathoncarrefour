@@ -10,9 +10,22 @@ interface.shortcuts = function(data)
 {
 	var shortcuts = "";
 	shortcuts += "<div id=\"shortcuts\">";
-
-	if (typeof data !== "undefined" && data.totalEstimated !== "undefined")
-		shortcuts += "<div class=\"shortcut-total-estimated\"><div class=\"shortcut-total-estimated-text\">Cout Total Estimé</div><div class=\"shortcut-total-estimated-price\">" + data.totalEstimated.toFixed(2) + "€</div></div>";
+		if (typeof data !== "undefined" && data.totalEstimated !== "undefined")
+		{
+			shortcuts += "<div class=\"shortcut-total-estimated\">";
+				if (data.totalEstimated <= interface.data.profile.costLimitList)
+				{
+					var estimatedAcceptable = "shortcuts-acceptable";
+					shortcuts += "<div class=\"shortcuts-acceptable-estimation\">Le montant estimé de cette liste d'achats ne dépasse pas la limite que vous avez fixé</div>";
+				}
+				else
+				{
+					var estimatedAcceptable = "shortcuts-unacceptable";
+					shortcuts += "<div class=\"shortcuts-unacceptable-estimation\">Le montant estimé de cette liste d'achats dépasse la limite que vous avez fixé</div>";
+				}
+				shortcuts += "<div class=\"shortcut-total-estimated-text\">Cout Total Estimé</div><div class=\"shortcut-total-estimated-price\"><div class=\"" + estimatedAcceptable + "\">" + data.totalEstimated.toFixed(2) + "€</div></div>";
+			shortcuts += "</div>";
+		}
 		shortcuts += "<img class=\"shortcut\" src=\"img/icon1.png\" />";
 		shortcuts += "<img class=\"shortcut\" src=\"img/icon2.png\" />";
 		shortcuts += "<img class=\"shortcut\" src=\"img/icon3.png\" />";
@@ -45,11 +58,9 @@ interface.menu = function()
 {
 	if (interface.info.menuOpened == 0 && interface.info.menuOperating == 0)
 	{
-		//alert('open');
 		interface.info.menuOperating = 1;
 		document.getElementById('menu').style.display = "block";
 		document.getElementById('menu').className = "animateFromRight";
-		//document.getElementById('menu').className = "";
 		document.getElementById('mainView').className = "blurred";
 		document.getElementById('footer').className = "blurred";
 		interface.info.menuOpened = 1;
@@ -57,15 +68,12 @@ interface.menu = function()
 	}
 	else if (interface.info.menuOpened == 1 && interface.info.menuOperating == 0)
 	{
-		//alert('close');
 		interface.info.menuOperating = 1;
 		document.getElementById('menu').className = "animateFromLeft";
 		document.getElementById('mainView').className = "";
 		document.getElementById('footer').className = "";
-		//document.getElementById('menu').className = "blurred";
 		interface.info.menuOpened = 0;
 		setTimeout(function(){document.getElementById('menu').style.display = "none"; interface.info.menuOperating = 0;}, 700);
-		
 	}
 }
 
@@ -92,7 +100,6 @@ interface.productsDisplay = function(data)
 		{
 			if (interface.productsDisplayCheckDouble(interface.data.profile.lists[i].products[z], productsList) == 0)
 			{
-				//set color with probability
 				var probabilityRGBATransparency = interface.data.profile.lists[i].products[z].probability / 100;
 				interface.data.profile.lists[i].products[z].probabilityRGBA = "rgba(" + interface.data.profile.probabilityColor.r + "," + interface.data.profile.probabilityColor.g + "," + interface.data.profile.probabilityColor.b + "," + probabilityRGBATransparency + ")";
 				productsList.push(interface.data.profile.lists[i].products[z]);
@@ -112,10 +119,13 @@ interface.productsDisplay = function(data)
 	var checkShortcuts = 0;
 	var total = 0;
 	var productsListSaved = [];
+
+	if (interface.customozationData.autorizedCostLimit == 0)
+		productsListHtml += "<div class=\"home-titre\">Je les veux...</div>";
+
 	for (var j = 0; productsList[j]; j++)
 	{
-		console.log("probability => " + productsList[j].probability + " limite => " + interface.data.profile.probabilityLimit);
-		if (productsList[j].probability >= interface.data.profile.probabilityLimit)
+		if (productsList[j].probability >= interface.data.profile.probabilityLimit && interface.customozationData.autorizedProbabilityLimit == 1)
 		{
 			total = total + productsList[j].price;
 			var inputCheckBox = "<input type=\"checkbox\" name=\"product\" value=\"" + productsList[j].id + "\" checked>";
@@ -125,21 +135,68 @@ interface.productsDisplay = function(data)
 		{
 			if (checkShortcuts == 0)
 			{
-				productsListHtml += interface.shortcuts({productsToShop:productsListSaved, totalEstimated:total});
+				if (interface.customozationData.autorizedCostLimit == 1)
+					productsListHtml += interface.shortcuts({productsToShop:productsListSaved, totalEstimated:total});
+				else
+				{
+					productsListHtml += "<div class=\"home-middle\"><img src=\"img/plus.png\"><img src=\"img/technology.png\"></div>";
+					productsListHtml += "<div class=\"home-titre\">Et pourquoi pas</div>";
+				}
 			}
 			checkShortcuts = checkShortcuts + 1;
 			var inputCheckBox = "<input type=\"checkbox\" name=\"product\" value=\"" + productsList[j].id + "\">";
 		}
-		productsListHtml += "<div class=\"product-line\" style=\"background:" + productsList[j].probabilityRGBA + "\"><div class=\"product-checkbox\">" + inputCheckBox + "</div><div class=\"product-name\">" + productsList[j].name + "</div><div class=\"product-price\">" + productsList[j].price + "€</div></div>";
+		if (interface.customozationData.autorizedCostLimit == 1)
+			var price = "<div class=\"product-price\">" + productsList[j].price + "€</div>";
+		else
+			var price = "";
+		if (interface.customozationData.autorizedColors == 1)
+			productsListHtml += "<div class=\"product-line\" style=\"background:" + productsList[j].probabilityRGBA + "\"><div class=\"product-checkbox\">" + inputCheckBox + "</div><div class=\"product-name\">" + productsList[j].name + "</div>" + price + "</div>";
+		else
+			productsListHtml += "<div class=\"product-line\"><div class=\"product-checkbox\">" + inputCheckBox + "</div><div class=\"product-name\">" + productsList[j].name + "</div>" + price + "</div>";
 	}
 	if (checkShortcuts == 0)
 		productsListHtml += interface.shortcuts();
-	if (productsList.length > 0)
-		return productsListHtml;
-	else
-		return "No data to analyze yet, add a product !";
-	//placer le background de couleur
-	//selectionner automatiquement les données supérieures à la moyenne de l'utilisateur
+	if (productsList.length == 0)
+		productsListHtml += "No data to analyze yet, add a product !";
+	if (interface.customozationData.autorizedCostLimit == 0)
+		productsListHtml += "<div class=\"home-go\">Go get it !</div>";
+	return productsListHtml;
+}
+
+interface.customozationData = {
+	autorizedColors:0,
+	autorizedCostLimit:0,
+	autorizedProbabilityLimit:0
+};
+
+interface.customizeData = function(data)
+{
+	if (data.option == "autorizedColors")
+	{
+		interface.customozationData.autorizedColors = (interface.customozationData.autorizedColors == 1) ? 0 : 1;
+		interface.navigate({'page':'settings'});
+	}
+	else if (data.option == "autorizedCostLimit")
+	{
+		interface.customozationData.autorizedCostLimit = (interface.customozationData.autorizedCostLimit == 1) ? 0 : 1;
+		interface.navigate({'page':'settings'});
+	}
+	else if (data.option == "autorizedProbabilityLimit")
+	{
+		interface.customozationData.autorizedProbabilityLimit = (interface.customozationData.autorizedProbabilityLimit == 1) ? 0 : 1;
+		interface.navigate({'page':'settings'});
+	}
+	else if (data.option == "probabilityLimit")
+	{
+		interface.data.profile.probabilityLimit = data.value;
+		document.getElementById('option-result-probabilityLimit').innerHTML = interface.data.profile.probabilityLimit;
+	}
+	else if (data.option == "costLimitList")
+	{
+		interface.data.profile.costLimitList = data.value;
+		document.getElementById('option-result-costLimitList').innerHTML = interface.data.profile.costLimitList;
+	}
 }
 
 interface.compose = function(data)
@@ -151,7 +208,7 @@ interface.compose = function(data)
 		elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'list-history'})\">My Lists</div>";
 		elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'account'})\">Account</div>";
 		elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'settings'})\">Settings</div>";
-		elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'whoweare'})\">whoweare</div>";
+		elementHtml += "<div class=\"button\" onclick=\"interface.navigate({'page':'whoweare'})\">Who We Are</div>";
 	}
 	else if (data.element == "menu-bar")
 	{
@@ -174,12 +231,55 @@ interface.compose = function(data)
 		else if (interface.info.currentPage == "settings")
 		{
 			elementHtml += interface.pageTitle({title:'Settings'});
+
 			elementHtml += "<div id=\"main-content\">";
+				elementHtml += "<div id=\"option-customization\">";
+					elementHtml += "<div class=\"option-customization-line\">";
+						elementHtml += "<div class=\"option-customization-line-text\">Printing color with probability list</div>";
+						elementHtml += "<div class=\"option-customization-line-data\" onclick=\"interface.customizeData({option:'autorizedColors'})\">";
+							elementHtml += (interface.customozationData.autorizedColors == 1) ? "Yes" : "No";
+						elementHtml += " (Click to Change)</div>";
+					elementHtml += "</div>";
+					elementHtml += "<div class=\"option-customization-line\">";
+						elementHtml += "<div class=\"option-customization-line-text\">Autorize cost limit per list</div>";
+						elementHtml += "<div class=\"option-customization-line-data\" onclick=\"interface.customizeData({option:'autorizedCostLimit'})\">";
+							elementHtml += (interface.customozationData.autorizedCostLimit == 1) ? "Yes" : "No";
+						elementHtml += " (Click to Change)</div>";
+					elementHtml += "</div>";
+					elementHtml += "<div class=\"option-customization-line\">";
+						elementHtml += "<div class=\"option-customization-line-text\">Autorize custom probablility recommandation on list</div>";
+						elementHtml += "<div class=\"option-customization-line-data\" onclick=\"interface.customizeData({option:'autorizedProbabilityLimit'})\">";
+							elementHtml += (interface.customozationData.autorizedProbabilityLimit == 1) ? "Yes" : "No";
+						elementHtml += " (Click to Change)</div>";
+					elementHtml += "</div>";
+				elementHtml += "</div>";
 
-				interface.data.profile.probabilityColor.r
-				interface.data.profile.probabilityColor.g
-				interface.data.profile.probabilityColor.b
+				elementHtml += "<div class=\"option\">";
+					elementHtml += "<div class=\"option-text\">Select value for the recommandation system based on probability limit</div>";
+					elementHtml += "<input id=\"slider-probabilityLimit\" class=\"option-data\" style=\"width: 90%;\" value=\"" + interface.data.profile.probabilityLimit + "\" type=\"range\" min=\"0\" max=\"100\" step=\"1\" oninput=\"interface.customizeData({value:this.value, option:'probabilityLimit'})\" onchange=\"interface.customizeData({value:this.value, option:'probabilityLimit'})\" />";
+					elementHtml += "<div class=\"option-result-text\">Actual setting :<div id=\"option-result-probabilityLimit\" class=\"option-result-data\">" + interface.data.profile.probabilityLimit + "</div>/100</div>";
+				elementHtml += "</div>";
+				elementHtml += "<div class=\"option\">";
+					elementHtml += "<div class=\"option-text\">Select the value for the cost limit per list</div>";
+					elementHtml += "<input id=\"slider-costLimitList\" class=\"option-data\" style=\"width: 90%;\" value=\"" + interface.data.profile.costLimitList + "\" type=\"range\" min=\"0\" max=\"250\" step=\"5\" oninput=\"interface.customizeData({value:this.value, option:'costLimitList'})\" onchange=\"interface.customizeData({value:this.value, option:'costLimitList'})\" />";
+					elementHtml += "<div class=\"option-result-text\">Actual setting :<div id=\"option-result-costLimitList\" class=\"option-result-data\">" + interface.data.profile.costLimitList + "</div>/250</div>";
+				elementHtml += "</div>";
 
+				elementHtml += "<div class=\"option\">";
+					elementHtml += "<div id=\"option-color\">";
+                		elementHtml += "<div id=\"slide\"></div>";
+                		elementHtml += "<div id=\"picker\"></div>";
+                		elementHtml += "<div id=\"color-render\"></div>";
+                	elementHtml += "</div>";
+                	setTimeout(function(){ColorPicker(document.getElementById('slide'),
+                    document.getElementById('picker'),
+                    function(hex, hsv, rgb) {
+                      document.getElementById('color-render').style.backgroundColor = hex;
+                    interface.data.profile.probabilityColor.r = rgb.r;
+					interface.data.profile.probabilityColor.g = rgb.g;
+					interface.data.profile.probabilityColor.b = rgb.b;
+                    });}, 50);
+				elementHtml += "</div>";
 			elementHtml += "</div>";
 		}
 		else if (interface.info.currentPage == "whoweare")
@@ -187,6 +287,68 @@ interface.compose = function(data)
 			elementHtml += interface.pageTitle({title:'Who We Are !'});
 			elementHtml += "<div id=\"main-content\">";
 
+			var participants = [
+				{
+					name:"LE MIGNAN Thomas",
+					phone:"06 79 63 87 32",
+					email:"contact@biodeploy.com",
+					linkedin:"https://fr.linkedin.com/in/thomas-le-mignan-29786a87",
+					skill:"Web Developer Full Stack"
+				},
+				{
+					name:"KAYONGA Earvin",
+					phone:"06 41 89 20 12",
+					email:"earvin@earvinkayonga.com",
+					linkedin:"https://fr.linkedin.com/in/earvinkayonga",
+					skill:"Web Dev Full Stack"
+				},
+				{
+					name:"OUSMANE BAWA GAOH Moustapha",
+					phone:"07 55 00 31 40",
+					email:"gaohmoustapha@gmail.com",
+					linkedin:"https://fr.linkedin.com/in/gaohmoustapha ",
+					skill:"DataScientist"
+				},
+				{
+					name:"HAIDARA PIERRE",
+					phone:"0615536978",
+					email:"pehaidara@gmail.com",
+					linkedin:"https://fr.linkedin.com/in/pierre-elias-haidara-72379564",
+					skill:"Data Scientist"
+				},
+				{
+					name:"BOURSIER Bertrand",
+					phone:"06 13 17 34 52",
+					email:"bertrand.boursier@gmail.com",
+					linkedin:"https://www.linkedin.com/in/bertrand-boursier-2107922",
+					skill:"Ruby-on-Rails"
+				},
+				{
+					name:"Cédric Faucheux",
+					phone:"06.14.44.62.16",
+					email:"cedric.faucheux@untienots.com",
+					linkedin:"https://www.linkedin.com/in/",
+					skill:"Data Scientist"
+				},
+				{
+					name:"Zyed JAMOUSSI",
+					phone:"0609861069",
+					email:"zyed@untienots.com",
+					linkedin:"https://www.linkedin.com/in/zyedjamoussi?trk=nav_responsive_tab_profile_pic",
+					skill:"Project Submissioner"
+				}
+			];
+
+			for (var deusexmachina = 0; participants[deusexmachina]; deusexmachina++)
+			{
+				elementHtml += "<div class=\"participant\">";
+					elementHtml += "<div class=\"participant-text\">Name</div><div class=\"participant-data name\">" + participants[deusexmachina].name + "</div>";
+					elementHtml += "<div class=\"participant-text\">Phone</div><div class=\"participant-data\">" + participants[deusexmachina].phone + "</div>";
+					elementHtml += "<div class=\"participant-text\">Email</div><div class=\"participant-data\">" + participants[deusexmachina].email + "</div>";
+					elementHtml += "<div class=\"participant-text\">LinkedIn</div><div class=\"participant-data linkedin\"><a href=\"" + participants[deusexmachina].linkedin + "\">Click here !</a></div>";
+					elementHtml += "<div class=\"participant-text\">Skill</div><div class=\"participant-data\">" + participants[deusexmachina].skill + "</div>";
+				elementHtml += "</div>";
+			}
 			elementHtml += "</div>";
 		}
 		else if (interface.info.currentPage == "account")
@@ -227,12 +389,27 @@ interface.compose = function(data)
 		{
 			elementHtml += interface.pageTitle({title:'My Saved Lists'});
 			elementHtml += "My Last Lists";
-			elementHtml += interface.shortcuts();
+			// Compter les listes
+			// accéder aux listes enregistrées
+		}
+		else if (interface.info.currentPage == "page-deforce")
+		{
+			//elementHtml += interface.pageTitle({title:'My Saved Lists'});
+			//elementHtml += "My Last Lists";
+			// Compter les listes
+			// accéder aux listes enregistrées
+			elementHtml += "<img class=\"page-deforce\" src=\"img/icon1.png\" onclick=\"interface.navigate({'page':'page-abuse'})\" />";
+			elementHtml += "<img class=\"page-deforce\" src=\"img/icon2.png\" onclick=\"interface.navigate({'page':'page-abuse'})\" />";
+			elementHtml += "<img class=\"page-deforce\" src=\"img/icon3.png\" onclick=\"interface.navigate({'page':'page-abuse'})\" />";
+		}
+		else if (interface.info.currentPage == "page-abuse")
+		{
+			elementHtml += "voila";
 		}
 	}
 	else if (data.element == "footer")
 	{
-		elementHtml += "<div>Hackathon Carrefour by BeMyApp 2016 &copy; - MySmartList &copy;</div>";
+		elementHtml += "<div>Hackathon Carrefour by BeMyApp 2016 &copy; From Scratch @48hours !</div>";
 	}
 	return elementHtml;
 }
@@ -286,6 +463,7 @@ interface.data = {
 			"g": 237,
 			"b": 46
 		},
+		"costLimitList":25,
 		"lists": [{
 			"dateCreation": "23-09-2016",
 			"shared": "0",
