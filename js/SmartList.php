@@ -137,7 +137,7 @@ interface.productsDisplay = function(data)
 
 	//for (var i = 0; interface.data.profile.lists[i]; i++)
 	//{
-		
+		/*
 		for (var z = 0; interface.json.productDescription[z]; z++)
 		{
 			if (interface.productsDisplayCheckDouble(interface.json.productDescription[z], productsList) == 0)
@@ -147,6 +147,11 @@ interface.productsDisplay = function(data)
 				productsList.push(interface.json.productDescription[z]);
 			}
 		}
+		*/
+
+		productsList = interface.json.productDescription;
+
+
 		
 	//}
 	productsList.sort(function (a, b){
