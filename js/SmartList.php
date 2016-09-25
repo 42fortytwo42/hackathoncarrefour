@@ -345,66 +345,57 @@ interface.compose = function(data)
 		{
 			elementHtml += interface.pageTitle({title:'Who We Are !'});
 			elementHtml += "<div id=\"main-content\">";
-			if (interface.wildcard == 1)
-			{
-				var participants = [
-					{
-						name:"LE MIGNAN Thomas",
-						phone:"06 79 63 87 32",
-						email:"contact@biodeploy.com",
-						linkedin:"https://fr.linkedin.com/in/thomas-le-mignan-29786a87",
-						skill:"Web Developer Full Stack"
-					},
-					{
-						name:"KAYONGA Earvin",
-						phone:"06 41 89 20 12",
-						email:"earvin@earvinkayonga.com",
-						linkedin:"https://fr.linkedin.com/in/earvinkayonga",
-						skill:"Web Dev Full Stack"
-					},
-					{
-						name:"OUSMANE BAWA GAOH Moustapha",
-						phone:"07 55 00 31 40",
-						email:"gaohmoustapha@gmail.com",
-						linkedin:"https://fr.linkedin.com/in/gaohmoustapha ",
-						skill:"DataScientist"
-					},
-					{
-						name:"HAIDARA PIERRE",
-						phone:"0615536978",
-						email:"pehaidara@gmail.com",
-						linkedin:"https://fr.linkedin.com/in/pierre-elias-haidara-72379564",
-						skill:"Data Scientist"
-					},
-					{
-						name:"BOURSIER Bertrand",
-						phone:"06 13 17 34 52",
-						email:"bertrand.boursier@gmail.com",
-						linkedin:"https://www.linkedin.com/in/bertrand-boursier-2107922",
-						skill:"Ruby-on-Rails"
-					}
-				];
-			}
-			else
-			{
-				var participants = [
-					{
-						name:"Cédric Faucheux",
-						phone:"06.14.44.62.16",
-						email:"cedric.faucheux@untienots.com",
-						linkedin:"https://www.linkedin.com/in/",
-						skill:"Data Scientist"
-					},
-					{
-						name:"Zyed JAMOUSSI",
-						phone:"0609861069",
-						email:"zyed@untienots.com",
-						linkedin:"https://www.linkedin.com/in/zyedjamoussi?trk=nav_responsive_tab_profile_pic",
-						skill:"Project Submissioner"
-					}
-				];
-			}
-
+			var participants = [
+				{
+					name:"LE MIGNAN Thomas",
+					phone:"06 79 63 87 32",
+					email:"contact@biodeploy.com",
+					linkedin:"https://fr.linkedin.com/in/thomas-le-mignan-29786a87",
+					skill:"Web Developer Full Stack"
+				},
+				{
+					name:"KAYONGA Earvin",
+					phone:"06 41 89 20 12",
+					email:"earvin@earvinkayonga.com",
+					linkedin:"https://fr.linkedin.com/in/earvinkayonga",
+					skill:"Web Dev Full Stack"
+				},
+				{
+					name:"OUSMANE BAWA GAOH Moustapha",
+					phone:"07 55 00 31 40",
+					email:"gaohmoustapha@gmail.com",
+					linkedin:"https://fr.linkedin.com/in/gaohmoustapha ",
+					skill:"DataScientist"
+				},
+				{
+					name:"HAIDARA PIERRE",
+					phone:"0615536978",
+					email:"pehaidara@gmail.com",
+					linkedin:"https://fr.linkedin.com/in/pierre-elias-haidara-72379564",
+					skill:"Data Scientist"
+				},
+				{
+					name:"BOURSIER Bertrand",
+					phone:"06 13 17 34 52",
+					email:"bertrand.boursier@gmail.com",
+					linkedin:"https://www.linkedin.com/in/bertrand-boursier-2107922",
+					skill:"Ruby-on-Rails"
+				},
+				{
+					name:"Cédric Faucheux",
+					phone:"06.14.44.62.16",
+					email:"cedric.faucheux@untienots.com",
+					linkedin:"https://www.linkedin.com/in/",
+					skill:"Data Scientist"
+				},
+				{
+					name:"Zyed JAMOUSSI",
+					phone:"0609861069",
+					email:"zyed@untienots.com",
+					linkedin:"https://www.linkedin.com/in/zyedjamoussi?trk=nav_responsive_tab_profile_pic",
+					skill:"Project Submissioner"
+				}
+			];
 			for (var deusexmachina = 0; participants[deusexmachina]; deusexmachina++)
 			{
 				elementHtml += "<div class=\"participant\">";
@@ -469,10 +460,7 @@ interface.compose = function(data)
 	}
 	else if (data.element == "footer")
 	{
-		if (interface.wildcard == 1)
-			elementHtml += "<div style=\"display:inline-block\">Hackathon Carrefour by BeMyApp 2016 &copy; </div><div style=\"display:inline-block\" onclick=\"interface.customizeData({option:'wildcard'})\"> From Scratch @48hours !</div>";
-		else
-			elementHtml += "<div style=\"display:inline-block\" onclick=\"interface.navigate({'page':'whoweare'})\">Qui Sommes-nous ? - </div><div style=\"display:inline-block\" onclick=\"interface.customizeData({option:'wildcard'})\">  BeMyApp &copy;</div>";
+		elementHtml += "<div style=\"display:inline-block\">Hackathon Carrefour by BeMyApp 2016 &copy; </div><div style=\"display:inline-block\" onclick=\"interface.customizeData({option:'wildcard'})\"> From Scratch @48hours !</div>";
 	}
 	return elementHtml;
 }
