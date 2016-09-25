@@ -133,7 +133,7 @@ interface.productsDisplay = function(data)
 	var productsList = [];
 
 
-	console.log(interface.json);
+	
 
 	//for (var i = 0; interface.data.profile.lists[i]; i++)
 	//{
@@ -151,7 +151,7 @@ interface.productsDisplay = function(data)
 
 		//productsList = interface.json.productDescription;
 
-
+console.log(productsList);
 		
 	//}
 	productsList.sort(function (a, b){
