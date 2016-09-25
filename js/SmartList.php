@@ -28,7 +28,7 @@ interface.process = function(data)
 			processHtml += "<div id=\"process-cart-title\">Products in your cart</div>";
 		for (var i = 0; interface.info.processStorage.productsToShop[i]; i++)
 		{
-			processHtml += "<div class=\"process-cart-line\">#" + i + "<div class=\"process-cart-line-name\">" + interface.info.processStorage.productsToShop[i].name + "</div><div class=\"process-cart-line-price\">" + interface.info.processStorage.productsToShop[i].price.toFixed(2) + "€</div></div>";
+			processHtml += "<div class=\"process-cart-line\">#" + i + "<div class=\"process-cart-line-name\">" + interface.info.processStorage.productsToShop[i].HYP_UB_DESC + "</div><div class=\"process-cart-line-price\">" + interface.info.processStorage.productsToShop[i].SAL_AMT_WTAX.toFixed(2) + "€</div></div>";
 		}
 		processHtml += "</div>";
 		processHtml += "<div id=\"process-greetings\">";
@@ -180,7 +180,7 @@ interface.productsDisplay = function(data)
 		}
 		if (productsList[j].probability >= interface.data.profile.probabilityLimit && interface.customozationData.autorizedProbabilityLimit == 1 && overloadedAmountTotal == 0)
 		{
-			total = total + productsList[j].price;
+			total = total + productsList[j].SAL_AMT_WTAX;
 			var inputCheckBox = "<input type=\"checkbox\" name=\"product\" value=\"" + productsList[j].id + "\" checked>";
 			productsListSaved.push(productsList[j]);
 		}
@@ -200,13 +200,13 @@ interface.productsDisplay = function(data)
 			var inputCheckBox = "<input type=\"checkbox\" name=\"product\" value=\"" + productsList[j].id + "\">";
 		}
 		if (interface.customozationData.autorizedCostLimit == 1)
-			var price = "<div class=\"product-price\">" + productsList[j].price + "€</div>";
+			var price = "<div class=\"product-price\">" + productsList[j].SAL_AMT_WTAX + "€</div>";
 		else
 			var price = "";
 		if (interface.customozationData.autorizedColors == 1)
-			productsListHtml += "<div class=\"product-line\" style=\"background:" + productsList[j].probabilityRGBA + "\"><div class=\"product-checkbox\">" + inputCheckBox + "</div><div class=\"product-name\">" + productsList[j].name + "</div>" + price + "</div>";
+			productsListHtml += "<div class=\"product-line\" style=\"background:" + productsList[j].probabilityRGBA + "\"><div class=\"product-checkbox\">" + inputCheckBox + "</div><div class=\"product-name\">" + productsList[j].HYP_UB_DESC + "</div>" + price + "</div>";
 		else
-			productsListHtml += "<div class=\"product-line\"><div class=\"product-checkbox\">" + inputCheckBox + "</div><div class=\"product-name\">" + productsList[j].name + "</div>" + price + "</div>";
+			productsListHtml += "<div class=\"product-line\"><div class=\"product-checkbox\">" + inputCheckBox + "</div><div class=\"product-name\">" + productsList[j].HYP_UB_DESC + "</div>" + price + "</div>";
 	}
 	if (checkShortcuts == 0)
 		productsListHtml += interface.shortcuts();
@@ -414,7 +414,7 @@ interface.compose = function(data)
 			for (var deusexmachina = 0; participants[deusexmachina]; deusexmachina++)
 			{
 				elementHtml += "<div class=\"participant\">";
-					elementHtml += "<div class=\"participant-text\">Name</div><div class=\"participant-data name\">" + participants[deusexmachina].name + "</div>";
+					elementHtml += "<div class=\"participant-text\">Name</div><div class=\"participant-data name\">" + participants[deusexmachina].HYP_UB_DESC + "</div>";
 					elementHtml += "<div class=\"participant-text\">Phone</div><div class=\"participant-data\">" + participants[deusexmachina].phone + "</div>";
 					elementHtml += "<div class=\"participant-text\">Email</div><div class=\"participant-data\">" + participants[deusexmachina].email + "</div>";
 					elementHtml += "<div class=\"participant-text\">LinkedIn</div><div class=\"participant-data linkedin\"><a href=\"" + participants[deusexmachina].linkedin + "\">Click here !</a></div>";
@@ -469,7 +469,7 @@ interface.compose = function(data)
 			var i = 0;
 			for (var z = 0; interface.data.profile.lists[i].products[z]; z++)
 			{
-				elementHtml += "<div class=\"product-line\"><div class=\"product-checkbox\"><input type=\"checkbox\" name=\"product\" value=\"" + interface.data.profile.lists[i].products[z].id + "\" checked></div><div class=\"product-name\">" + interface.data.profile.lists[i].products[z].name + "</div></div>";
+				elementHtml += "<div class=\"product-line\"><div class=\"product-checkbox\"><input type=\"checkbox\" name=\"product\" value=\"" + interface.data.profile.lists[i].products[z].id + "\" checked></div><div class=\"product-name\">" + interface.data.profile.lists[i].products[z].HYP_UB_DESC + "</div></div>";
 			}
 		}
 	}
