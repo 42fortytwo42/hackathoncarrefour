@@ -252,19 +252,23 @@ input[type="checkbox"] {
 }
 
 .shortcuts-acceptable-estimation {
-
+	color: green;
+    font-style: italic;
 }
 
 .shortcuts-acceptable {
-
+	color: green;
+    font-weight: bolder;
 }
 
 .shortcuts-unacceptable-estimation {
-
+	color: red;
+    font-style: italic;
 }
 
 .shortcuts-unacceptable {
-
+	color: red;
+    font-weight: bolder;
 }
 
 #option-customization {
@@ -316,6 +320,83 @@ input[type="checkbox"] {
 	display: inline-block;
     margin-left: 15px;
     font-size: 1.4em;
+}
+
+.red-line-out-of-money {
+	width: 100%;
+    height: 5px;
+    background: red;
+}
+
+#process-recall {
+	text-align: center;
+}
+
+#process-miniature {
+    height: 125px;
+    width: 125px;
+    margin: 0 auto;
+}
+
+#process-recall-method {
+	display: inline-block;
+    width: 40%;
+    vertical-align: top;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 1.25em;
+    margin-left: 10px;
+}
+
+#process-recall-total-price {
+	margin-bottom: 15px;
+    font-size: 1.5em;
+    width: 70%;
+    margin: 15px auto;
+}
+
+#process-confirm {
+	width: 60%;
+    margin: 0 auto;
+}
+
+#process-cart {
+	border: solid 1px blue;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 15px;
+    width: 80%;
+    margin: 15px auto;
+}
+
+#process-cart-title {
+	font-size: 1.7em;
+    text-align: center;
+    border-bottom: dashed blue;
+    margin-bottom: 15px;
+}
+
+.process-cart-line {
+	font-size: 1.25em;
+}
+
+.process-cart-line-name {
+	display: inline-block;
+    margin-left: 15px;
+    font-style: italic;
+}
+
+.process-cart-line-price {
+	display: inline-block;
+    float: right;
+    font-weight: bold;
+}
+
+#process-greetings {
+	text-align: center;
+    font-size: 2em;
+    margin-top: 38px;
+    color: red;
 }
 
 #footer {

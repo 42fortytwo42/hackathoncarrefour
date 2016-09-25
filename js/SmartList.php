@@ -1,5 +1,3 @@
-
-
 var interface = {};
 
 interface.wildcard = 0;
@@ -9,12 +7,43 @@ interface.elements = {};
 interface.info = {};
 interface.info.currentPage = "home";
 
+interface.info.processStorage = {};
+
+interface.process = function(data)
+{
+	var processHtml = "";
+		processHtml += "<div id=\"process-recall\">";
+			processHtml += "<img id=\"process-miniature\" src=\"" + data.img + "\" />";
+			processHtml += "<div id=\"process-recall-method\">";
+				processHtml += "You have choosen this method to own your products : " + data.method + "";
+			processHtml += "</div>";
+			processHtml += "<div id=\"process-recall-total-price\">";
+				processHtml += "You are about to pay " + interface.info.processStorage.totalEstimated.toFixed(2) + "€";
+			processHtml += "</div>";
+		processHtml += "</div>";
+		processHtml += "<div id=\"process-confirm\">";
+			processHtml += "Accept Transaction and go to the online paiement system (you accept the terms and conditions)";
+		processHtml += "</div>";
+		processHtml += "<div id=\"process-cart\">";
+			processHtml += "<div id=\"process-cart-title\">Products in your cart</div>";
+		for (var i = 0; interface.info.processStorage.productsToShop[i]; i++)
+		{
+			processHtml += "<div class=\"process-cart-line\">#" + i + "<div class=\"process-cart-line-name\">" + interface.info.processStorage.productsToShop[i].name + "</div><div class=\"process-cart-line-price\">" + interface.info.processStorage.productsToShop[i].price.toFixed(2) + "€</div></div>";
+		}
+		processHtml += "</div>";
+		processHtml += "<div id=\"process-greetings\">";
+			processHtml += "Thank you to choose Carrefour";
+		processHtml += "</div>";
+	document.getElementById('mainView').innerHTML = processHtml;
+}
+
 interface.shortcuts = function(data)
 {
 	var shortcuts = "";
 	shortcuts += "<div id=\"shortcuts\">";
 		if (typeof data !== "undefined" && data.totalEstimated !== "undefined")
 		{
+			interface.info.processStorage = data;
 			shortcuts += "<div class=\"shortcut-total-estimated\">";
 				if (data.totalEstimated <= interface.data.profile.costLimitList)
 				{
@@ -29,9 +58,9 @@ interface.shortcuts = function(data)
 				shortcuts += "<div class=\"shortcut-total-estimated-text\">Cout Total Estimé</div><div class=\"shortcut-total-estimated-price\"><div class=\"" + estimatedAcceptable + "\">" + data.totalEstimated.toFixed(2) + "€</div></div>";
 			shortcuts += "</div>";
 		}
-		shortcuts += "<img class=\"shortcut\" src=\"img/icon1.png\" />";
-		shortcuts += "<img class=\"shortcut\" src=\"img/icon2.png\" />";
-		shortcuts += "<img class=\"shortcut\" src=\"img/icon3.png\" />";
+		shortcuts += "<img onclick=\"interface.process({method:'My Local Carrefour Store', img:'img/icon1.png'})\" class=\"shortcut\" src=\"img/icon1.png\" />";
+		shortcuts += "<img onclick=\"interface.process({method:'The Carrefour Drive', img:'img/icon2.png'})\" class=\"shortcut\" src=\"img/icon2.png\" />";
+		shortcuts += "<img onclick=\"interface.process({method:'The Carrefour Ooshop Delivery', img:'img/icon3.png'})\" class=\"shortcut\" src=\"img/icon3.png\" />";
 	shortcuts += "</div>";
 	return shortcuts;
 }
@@ -122,18 +151,23 @@ interface.productsDisplay = function(data)
 	    return 0;
 	});
 
-	//générer le template.
 	var productsListHtml = "";
 	var checkShortcuts = 0;
 	var total = 0;
 	var productsListSaved = [];
+	var overloadedAmountTotal = 0;
 
 	if (interface.customozationData.autorizedCostLimit == 0)
 		productsListHtml += "<div class=\"home-titre\">Je les veux...</div>";
 
 	for (var j = 0; productsList[j]; j++)
 	{
-		if (productsList[j].probability >= interface.data.profile.probabilityLimit && interface.customozationData.autorizedProbabilityLimit == 1)
+		if (interface.data.profile.costLimitList <= total && overloadedAmountTotal == 0)
+		{
+			productsListHtml += "<div class=\"red-line-out-of-money\"></div>";
+			overloadedAmountTotal = 1;
+		}
+		if (productsList[j].probability >= interface.data.profile.probabilityLimit && interface.customozationData.autorizedProbabilityLimit == 1 && overloadedAmountTotal == 0)
 		{
 			total = total + productsList[j].price;
 			var inputCheckBox = "<input type=\"checkbox\" name=\"product\" value=\"" + productsList[j].id + "\" checked>";
@@ -387,7 +421,6 @@ interface.compose = function(data)
 		{
 			elementHtml += interface.pageTitle({title:'User Account'});
 			elementHtml += "<div id=\"main-content\">";
-				//elementHtml += "<div class=\"lineDivideTwo\">";
 					elementHtml += "<div class=\"line\">";
 						elementHtml += "<div class=\"line-title\">Lastname</div>";
 						elementHtml += "<div class=\"line-data\">" + interface.data.profile.lastname + "</div>";
@@ -404,17 +437,6 @@ interface.compose = function(data)
 						elementHtml += "<div class=\"line-title\">Sexe</div>";
 						elementHtml += "<div class=\"line-data\">" + interface.data.profile.sexe + "</div>";
 					elementHtml += "</div>";
-				//elementHtml += "</div>";
-				//elementHtml += "<div class=\"lineDivideTwo\">";
-					//elementHtml += "<div class=\"line\">";
-						//elementHtml += "<div class=\"line-title\">Avatar</div>";
-						//elementHtml += "<div class=\"line-data\"><img class=\"\" src=\"" + interface.data.profile.avatar + "\"></div>";
-					//elementHtml += "</div>";
-					//elementHtml += "<div class=\"line\">";
-						//elementHtml += "<div class=\"line-title\">Lists Total</div>";
-						//elementHtml += "<div class=\"line-data\">" + interface.data.profile.lists.length + "</div>";
-					//elementHtml += "</div>";
-				//elementHtml += "</div>";
 			elementHtml += "</div>";
 		}
 		else if (interface.info.currentPage == "list-history")
@@ -428,9 +450,6 @@ interface.compose = function(data)
 				elementHtml += "<div class=\"line-title\">Total Share of this list</div>";
 				elementHtml += "<div class=\"line-data\">" + interface.data.profile.lists[0].shared + "</div>";
 			elementHtml += "</div>";
-
-			// Compter les listes
-			// accéder aux listes enregistrées
 		}
 		else if (interface.info.currentPage == "page-deforce")
 		{
@@ -502,9 +521,9 @@ interface.data = {
 		"avatar": "avatar.jpg",
 		"probabilityLimit": 55,
 		"probabilityColor": {
-			"r": 17,
-			"g": 237,
-			"b": 46
+			"r": 100,
+			"g": 100,
+			"b": 0
 		},
 		"costLimitList":25,
 		"lists": [{
