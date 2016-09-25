@@ -16,5 +16,5 @@
 		<script type="text/javascript" src="js/jscolor.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/styles.css">
 	</head>
-	<body onload="interface.construct()"></body>
+	<body onload="interface.preconstruct()"></body>
 </html>

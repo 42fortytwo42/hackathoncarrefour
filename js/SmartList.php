@@ -137,7 +137,7 @@ interface.productsDisplay = function(data)
 
 	//for (var i = 0; interface.data.profile.lists[i]; i++)
 	//{
-		/*
+		
 		for (var z = 0; interface.json.productDescription[z]; z++)
 		{
 			if (interface.productsDisplayCheckDouble(interface.json.productDescription[z], productsList) == 0)
@@ -147,7 +147,7 @@ interface.productsDisplay = function(data)
 				productsList.push(interface.json.productDescription[z]);
 			}
 		}
-		*/
+		
 	//}
 	productsList.sort(function (a, b){
 	    if (a.QANTITY_x < b.QANTITY_x)
@@ -285,7 +285,7 @@ interface.compose = function(data)
 		{
 			elementHtml += interface.pageTitle({title:'Home'});
 			elementHtml += "<div id=\"main-content\">";
-				//elementHtml += interface.productsDisplay({option:'probability'});
+				elementHtml += interface.productsDisplay({option:'probability'});
 			elementHtml += "</div>";
 		}
 		if (interface.info.currentPage == "add")
@@ -492,6 +492,11 @@ interface.update = function()
 	document.getElementById('footer').innerHTML = interface.elements.footer;
 }
 
+interface.preconstruct = function()
+{
+	interface.ask();
+}
+
 interface.construct = function()
 {
 	var menu = document.createElement("div");
@@ -649,5 +654,6 @@ interface.ask = function(data)
         console.log("response is : " + html);
         interface.json = JSON.parse(html);
  		console.log(interface.json);
+ 		interface.construct();
     });
 }
