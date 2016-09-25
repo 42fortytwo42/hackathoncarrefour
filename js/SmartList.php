@@ -80,7 +80,7 @@ interface.pageTitle = function(data)
 		var pageTitle = "";
 		pageTitle += "<div id=\"page-title\">";
 			pageTitle += "<div id=\"page-title-name\"> > " + data.title + "</div>";
-			pageTitle += "<div id=\"page-title-user\">" + interface.data.profile.firstname + "'s Lists</div>";
+			pageTitle += "<div id=\"page-title-user\"></div>";
 		pageTitle += "</div>";
 		return pageTitle;
 	}
@@ -127,6 +127,21 @@ interface.productsDisplayCheckDouble = function(product, productList)
 	}
 	return double;
 }
+
+function TextAbstract(text, length)
+{
+    if (text == null) {
+        return "";
+    }
+    if (text.length <= length) {
+        return text;
+    }
+    text = text.substring(0, length);
+    last = text.lastIndexOf(" ");
+    text = text.substring(0, last);
+    return text + "...";
+}
+
 
 interface.productsDisplay = function(data)
 {
@@ -204,9 +219,9 @@ console.log(productsList);
 		else
 			var price = "";
 		if (interface.customozationData.autorizedColors == 1)
-			productsListHtml += "<div class=\"product-line\" style=\"background:" + productsList[j].probabilityRGBA + "\"><div class=\"product-checkbox\">" + inputCheckBox + "</div><div class=\"product-name\">" + productsList[j].HYP_UB_DESC + "</div>" + price + "</div>";
+			productsListHtml += "<div class=\"product-line\" style=\"background:" + productsList[j].probabilityRGBA + "\"><div class=\"product-checkbox\">" + inputCheckBox + "</div><div class=\"product-name\">" + TextAbstract(productsList[j].HYP_UB_DESC[z].HYP_UB_DESC, 30) + "</div>" + price + "</div>";
 		else
-			productsListHtml += "<div class=\"product-line\"><div class=\"product-checkbox\">" + inputCheckBox + "</div><div class=\"product-name\">" + productsList[j].HYP_UB_DESC + "</div>" + price + "</div>";
+			productsListHtml += "<div class=\"product-line\"><div class=\"product-checkbox\">" + inputCheckBox + "</div><div class=\"product-name\">" + TextAbstract(productsList[j].HYP_UB_DESC[z].HYP_UB_DESC, 30) + "</div>" + price + "</div>";
 	}
 	if (checkShortcuts == 0)
 		productsListHtml += interface.shortcuts();
@@ -468,7 +483,7 @@ interface.compose = function(data)
 		{
 			for (var z = 0; interface.json.productDescription[z]; z++)
 			{
-				elementHtml += "<div class=\"product-line\"><div class=\"product-checkbox\"><input type=\"checkbox\" name=\"product\" value=\"" + interface.json.productDescription[z].HYP_UB_DESC + "\"></div><div class=\"product-name\">" + interface.json.productDescription[z].HYP_UB_DESC + "</div></div>";
+				elementHtml += "<div class=\"product-line\"><div class=\"product-checkbox\"><input type=\"checkbox\" name=\"product\" value=\"" + interface.json.productDescription[z].HYP_UB_DESC + "\"></div><div class=\"product-name\">" + TextAbstract(interface.json.productDescription[z].HYP_UB_DESC, 30) + "</div></div>";
 			}
 		}
 	}
